@@ -112,7 +112,6 @@ const baseDeDatosProductos = {
   ]
 };
 
-// Componente para tarjetas de categoría superior (en cuadrícula)
 const CategoryCard = ({ img, title, onClick }) => (
   <div onClick={onClick} className="category-card" style={{ cursor: 'pointer' }}>
     <div className="category-image-container">
@@ -122,7 +121,6 @@ const CategoryCard = ({ img, title, onClick }) => (
   </div>
 );
 
-// Componente para tarjetas de producto individual
 const ProductCard = ({ img, title, price, onComprar, onAbrirDetalle }) => (
   <div className="product-card">
     <div className="product-image-container" onClick={onAbrirDetalle} style={{ cursor: 'pointer' }}>

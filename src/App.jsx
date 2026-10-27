@@ -130,8 +130,7 @@ function App() {
   const productosRef = useRef(null);
   const categoriasRef = useRef(null);
 
-  // Link de pago oficial de Paradise Shop en Mercado Pago
-  const linkPagoMercadoPago = "https://link.mercadopago.cl/paradiseshopchile"; 
+  const costoEnvio = 4000; // Costo fijo de despacho en CLP
 
   const irAInicio = () => {
     setCategoriaSeleccionada(null);
@@ -165,7 +164,15 @@ function App() {
     setCarrito(nuevoCarrito);
   };
 
-  const totalCarrito = carrito.reduce((acc, item) => acc + item.precio, 0);
+  const subtotalCarrito = carrito.reduce((acc, item) => acc + item.precio, 0);
+  const totalConEnvio = subtotalCarrito > 0 ? subtotalCarrito + costoEnvio : 0;
+
+  // Función para redirigir a Mercado Pago pasando el monto exacto por la URL
+  const irAPagarMercadoPago = () => {
+    if (totalConEnvio <= 0) return;
+    const urlPagoDinamico = `https://link.mercadopago.cl/paradiseshopchile?amount=${totalConEnvio}`;
+    window.open(urlPagoDinamico, '_blank');
+  };
 
   const productosFiltrados = categoriaSeleccionada 
     ? baseDeDatosProductos[categoriaSeleccionada] 
@@ -395,7 +402,7 @@ function App() {
               <p style={{ margin: '1.5rem 0', textAlign: 'center' }}>Tu carrito está vacío. ¡Agrega tus diseños favoritos!</p>
             ) : (
               <>
-                <div style={{ maxHeight: '250px', overflowY: 'auto', margin: '1rem 0', display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
+                <div style={{ maxHeight: '220px', overflowY: 'auto', margin: '1rem 0', display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
                   {carrito.map((item, idx) => (
                     <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #eee', paddingBottom: '0.5rem' }}>
                       <div style={{ display: 'flex', gap: '0.8rem', alignItems: 'center' }}>
@@ -413,20 +420,29 @@ function App() {
                   ))}
                 </div>
 
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '1.5rem 0', borderTop: '2px solid #111', paddingTop: '1rem', fontSize: '1.1rem', fontWeight: 'bold' }}>
-                  <span>Total Acumulado:</span>
-                  <span style={{ color: '#ff007f', fontSize: '1.3rem' }}>${totalCarrito.toLocaleString('es-CL')} CLP</span>
+                <div style={{ borderTop: '1px solid #ddd', paddingTop: '0.8rem', display: 'flex', flexDirection: 'column', gap: '0.4rem', fontSize: '0.95rem' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <span>Subtotal Productos:</span>
+                    <span>${subtotalCarrito.toLocaleString('es-CL')} CLP</span>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <span>Despacho / Envíos:</span>
+                    <span>${costoEnvio.toLocaleString('es-CL')} CLP</span>
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '1rem 0', borderTop: '2px solid #111', paddingTop: '1rem', fontSize: '1.1rem', fontWeight: 'bold' }}>
+                  <span>Total a Pagar:</span>
+                  <span style={{ color: '#ff007f', fontSize: '1.3rem' }}>${totalConEnvio.toLocaleString('es-CL')} CLP</span>
                 </div>
 
                 <div style={{ display: 'flex', gap: '1rem' }}>
-                  <a 
-                    href={linkPagoMercadoPago} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    style={{ flex: 1, background: '#ff007f', color: '#fff', border: 'none', padding: '0.9rem', fontWeight: 'bold', cursor: 'pointer', borderRadius: '4px', textDecoration: 'none', textAlign: 'center', textTransform: 'uppercase' }}
+                  <button 
+                    onClick={irAPagarMercadoPago}
+                    style={{ flex: 1, background: '#ff007f', color: '#fff', border: 'none', padding: '0.9rem', fontWeight: 'bold', cursor: 'pointer', borderRadius: '4px', textTransform: 'uppercase' }}
                   >
-                    Pagar Total en Mercado Pago
-                  </a>
+                    Pagar ${totalConEnvio.toLocaleString('es-CL')} CLP en Mercado Pago
+                  </button>
                 </div>
               </>
             )}

@@ -130,6 +130,9 @@ function App() {
   const productosRef = useRef(null);
   const categoriasRef = useRef(null);
 
+  // ⚠️ AQUÍ PUEDES PEGAR TU LINK DE PAGO OFICIAL DE MERCADO PAGO ⚠️
+  const linkPagoMercadoPago = "https://www.mercadopago.cl"; 
+
   const irAInicio = () => {
     setCategoriaSeleccionada(null);
     setBusqueda('');
@@ -150,7 +153,6 @@ function App() {
     }, 150);
   };
 
-  // Función para agregar al carrito
   const agregarAlCarrito = (producto, talla = null) => {
     const tallaElegida = talla || (producto.tallas && producto.tallas[0]) || 'Única';
     setCarrito([...carrito, { ...producto, tallaSeleccionada: tallaElegida }]);
@@ -158,13 +160,11 @@ function App() {
     setMostrarCarritoModal(true);
   };
 
-  // Función para eliminar item del carrito
   const eliminarDelCarrito = (index) => {
     const nuevoCarrito = carrito.filter((_, i) => i !== index);
     setCarrito(nuevoCarrito);
   };
 
-  // Calcular precio total del carrito
   const totalCarrito = carrito.reduce((acc, item) => acc + item.precio, 0);
 
   const productosFiltrados = categoriaSeleccionada 
@@ -177,7 +177,6 @@ function App() {
 
   return (
     <div className="app-container" ref={topRef}>
-      {/* Header / Barra de Navegación Exacta */}
       <header className="app-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem 2rem', backgroundColor: '#111', color: '#fff' }}>
         <div className="logo" onClick={irAInicio} style={{ cursor: 'pointer', fontWeight: 'bold', fontSize: '1.2rem' }}>
           TIENDA PARADISE <span style={{ color: '#ff007f' }}>.CL</span>
@@ -421,7 +420,7 @@ function App() {
 
                 <div style={{ display: 'flex', gap: '1rem' }}>
                   <a 
-                    href="https://www.mercadopago.cl" 
+                    href={linkPagoMercadoPago} 
                     target="_blank" 
                     rel="noopener noreferrer"
                     style={{ flex: 1, background: '#ff007f', color: '#fff', border: 'none', padding: '0.9rem', fontWeight: 'bold', cursor: 'pointer', borderRadius: '4px', textDecoration: 'none', textAlign: 'center', textTransform: 'uppercase' }}

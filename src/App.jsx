@@ -112,6 +112,33 @@ const baseDeDatosProductos = {
   ]
 };
 
+// Componente para tarjetas de categoría superior (en cuadrícula)
+const CategoryCard = ({ img, title, onClick }) => (
+  <div onClick={onClick} className="category-card" style={{ cursor: 'pointer' }}>
+    <div className="category-image-container">
+      <img src={img} alt={title} />
+    </div>
+    <div className="category-title">{title}</div>
+  </div>
+);
+
+// Componente para tarjetas de producto individual
+const ProductCard = ({ img, title, price, onComprar, onAbrirDetalle }) => (
+  <div className="product-card">
+    <div className="product-image-container" onClick={onAbrirDetalle} style={{ cursor: 'pointer' }}>
+      <img src={img} alt={title} />
+    </div>
+    <div className="product-info">
+      <h4 className="product-title" onClick={onAbrirDetalle} style={{ cursor: 'pointer' }}>{title}</h4>
+      <p className="product-price">{price}</p>
+      <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
+        <button onClick={onAbrirDetalle} style={{ flex: 1, backgroundColor: '#111', color: '#fff', border: 'none', padding: '0.6rem', borderRadius: '4px', fontWeight: 'bold', fontSize: '0.75rem', textTransform: 'uppercase', cursor: 'pointer' }}>Ver Detalle</button>
+        <button onClick={onComprar} className="buy-button" style={{ flex: 1 }}>Comprar</button>
+      </div>
+    </div>
+  </div>
+);
+
 function App() {
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null);
   const [busqueda, setBusqueda] = useState('');
@@ -171,34 +198,13 @@ function App() {
         <section className="categories-section">
           <h2>CATEGORÍAS OFICIALES</h2>
           <div className="categories-grid">
-            <div onClick={() => setCategoriaSeleccionada('hombre')} className="product-card" style={{ cursor: 'pointer' }}>
-              <div className="product-image-container"><img src={imgHombre} alt="Hombre" /></div>
-              <div style={{ padding: '1rem', textAlign: 'center', fontWeight: 'bold' }}>HOMBRE / UNISEX</div>
-            </div>
-            <div onClick={() => setCategoriaSeleccionada('mujer')} className="product-card" style={{ cursor: 'pointer' }}>
-              <div className="product-image-container"><img src={imgMujer} alt="Mujer" /></div>
-              <div style={{ padding: '1rem', textAlign: 'center', fontWeight: 'bold' }}>MUJER</div>
-            </div>
-            <div onClick={() => setCategoriaSeleccionada('gorras')} className="product-card" style={{ cursor: 'pointer' }}>
-              <div className="product-image-container"><img src={imgGorras} alt="Gorras" /></div>
-              <div style={{ padding: '1rem', textAlign: 'center', fontWeight: 'bold' }}>GORRAS / JOCKEYS</div>
-            </div>
-            <div onClick={() => setCategoriaSeleccionada('totebag')} className="product-card" style={{ cursor: 'pointer' }}>
-              <div className="product-image-container"><img src={imgTotebag} alt="Tote Bags" /></div>
-              <div style={{ padding: '1rem', textAlign: 'center', fontWeight: 'bold' }}>TOTE BAGS</div>
-            </div>
-            <div onClick={() => setCategoriaSeleccionada('cuadros')} className="product-card" style={{ cursor: 'pointer' }}>
-              <div className="product-image-container"><img src={imgCuadros} alt="Cuadros" /></div>
-              <div style={{ padding: '1rem', textAlign: 'center', fontWeight: 'bold' }}>CUADROS DECORATIVOS</div>
-            </div>
-            <div onClick={() => setCategoriaSeleccionada('llaveros')} className="product-card" style={{ cursor: 'pointer' }}>
-              <div className="product-image-container"><img src={imgLlaveros} alt="Llaveros" /></div>
-              <div style={{ padding: '1rem', textAlign: 'center', fontWeight: 'bold' }}>LLAVEROS</div>
-            </div>
-            <div onClick={() => setCategoriaSeleccionada('mousepad')} className="product-card" style={{ cursor: 'pointer' }}>
-              <div className="product-image-container"><img src={imgMousepad} alt="Mousepads" /></div>
-              <div style={{ padding: '1rem', textAlign: 'center', fontWeight: 'bold' }}>MOUSE PADS</div>
-            </div>
+            <CategoryCard img={imgHombre} title="HOMBRE / UNISEX" onClick={() => setCategoriaSeleccionada('hombre')} />
+            <CategoryCard img={imgMujer} title="MUJER" onClick={() => setCategoriaSeleccionada('mujer')} />
+            <CategoryCard img={imgGorras} title="GORRAS / JOCKEYS" onClick={() => setCategoriaSeleccionada('gorras')} />
+            <CategoryCard img={imgTotebag} title="TOTE BAGS" onClick={() => setCategoriaSeleccionada('totebag')} />
+            <CategoryCard img={imgCuadros} title="CUADROS DECORATIVOS" onClick={() => setCategoriaSeleccionada('cuadros')} />
+            <CategoryCard img={imgLlaveros} title="LLAVEROS" onClick={() => setCategoriaSeleccionada('llaveros')} />
+            <CategoryCard img={imgMousepad} title="MOUSE PADS" onClick={() => setCategoriaSeleccionada('mousepad')} />
           </div>
         </section>
       )}
@@ -215,19 +221,14 @@ function App() {
 
         <div className="products-grid">
           {resultadosBusqueda.map((prod, idx) => (
-            <div key={idx} className="product-card">
-              <div className="product-image-container" onClick={() => setProductoDetalle(prod)} style={{ cursor: 'pointer' }}>
-                <img src={prod.imagen} alt={prod.titulo} />
-              </div>
-              <div className="product-info">
-                <h4 className="product-title" onClick={() => setProductoDetalle(prod)} style={{ cursor: 'pointer' }}>{prod.titulo}</h4>
-                <p className="product-price">{prod.precio}</p>
-                <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
-                  <button onClick={() => setProductoDetalle(prod)} style={{ flex: 1, backgroundColor: '#111', color: '#fff', border: 'none', padding: '0.6rem', borderRadius: '4px', fontWeight: 'bold', fontSize: '0.75rem', textTransform: 'uppercase', cursor: 'pointer' }}>Ver Detalle</button>
-                  <button onClick={() => agregarAlCarrito(prod)} className="buy-button" style={{ flex: 1 }}>Comprar</button>
-                </div>
-              </div>
-            </div>
+            <ProductCard 
+              key={idx} 
+              img={prod.imagen} 
+              title={prod.titulo} 
+              price={prod.precio} 
+              onComprar={() => agregarAlCarrito(prod)} 
+              onAbrirDetalle={() => setProductoDetalle(prod)} 
+            />
           ))}
         </div>
       </section>

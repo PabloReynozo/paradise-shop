@@ -168,7 +168,7 @@ function App() {
       {/* Header / Barra de Navegación Exacta */}
       <header className="app-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem 2rem', backgroundColor: '#111', color: '#fff' }}>
         <div className="logo" onClick={irAInicio} style={{ cursor: 'pointer', fontWeight: 'bold', fontSize: '1.2rem' }}>
-          PARADISE <span style={{ color: '#ff007f' }}>SHOP</span>.CL
+          TIENDA PARADISE <span style={{ color: '#ff007f' }}>.CL</span>
         </div>
         
         <nav className="nav-links" style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
@@ -179,7 +179,7 @@ function App() {
         </nav>
 
         <div className="header-actions" style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-          <button onClick={() => setMostrarBuscador(!mostrarBuscador)} style={{ background: 'none', border: 'none', color: '#fff', cursor: 'pointer', fontSize: '1.2rem', title: 'Buscar' }}>
+          <button onClick={() => setMostrarBuscador(!mostrarBuscador)} style={{ background: 'none', border: 'none', color: '#fff', cursor: 'pointer', fontSize: '1.2rem' }}>
             🔍
           </button>
           <button onClick={() => setMostrarCarritoModal(true)} className="cart-icon-btn" style={{ background: '#ff007f', color: '#fff', border: 'none', padding: '0.5rem 1rem', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>
@@ -189,7 +189,7 @@ function App() {
       </header>
 
       <section className="hero-section" style={{ textAlign: 'center', padding: '2.5rem 1rem' }}>
-        <h1>COLECCIÓN EXCLUSIVA PARADISE SHOP</h1>
+        <h1>COLECCIÓN EXCLUSIVA TIENDA PARAÍSO</h1>
         <p>Encuentra tus diseños favoritos en poleras, polerones, gorras, cuadros y más.</p>
         {mostrarBuscador && (
           <div style={{ marginTop: '1rem' }}>
@@ -269,21 +269,67 @@ function App() {
         </div>
       </section>
 
-      {/* Modal Tabla de Dimensiones */}
+      {/* Modal Tabla de Dimensiones Oficial */}
       {mostrarDimensionesModal && (
-        <div className="modal-overlay" onClick={() => setMostrarDimensionesModal(false)} style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.7)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000 }}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()} style={{ background: '#fff', padding: '2rem', borderRadius: '8px', maxWidth: '500px', width: '90%', color: '#111' }}>
-            <h3>📏 Tabla de Dimensiones</h3>
-            <p style={{ margin: '1rem 0' }}>Revisa las medidas de nuestras poleras oversize y estándar:</p>
-            <ul style={{ paddingLeft: '1.2rem', lineHeight: '1.8' }}>
-              <li><strong>Talla S:</strong> Ancho 50 cm | Largo 70 cm</li>
-              <li><strong>Talla M:</strong> Ancho 52 cm | Largo 72 cm</li>
-              <li><strong>Talla L:</strong> Ancho 54 cm | Largo 74 cm</li>
-              <li><strong>Talla XL:</strong> Ancho 56 cm | Largo 76 cm</li>
-              <li><strong>Talla 2XL:</strong> Ancho 58 cm | Largo 78 cm</li>
-            </ul>
-            <button onClick={() => setMostrarDimensionesModal(false)} style={{ width: '100%', background: '#111', color: '#fff', border: 'none', padding: '0.8rem', fontWeight: 'bold', cursor: 'pointer', borderRadius: '4px', marginTop: '1.5rem' }}>
-              Cerrar
+        <div className="modal-overlay" onClick={() => setMostrarDimensionesModal(false)} style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.7)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000, padding: '1rem' }}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()} style={{ background: '#fff', padding: '2rem', borderRadius: '8px', maxWidth: '650px', width: '100%', color: '#111', maxHeight: '80vh', overflowY: 'auto' }}>
+            <h3 style={{ marginBottom: '1rem', borderBottom: '2px solid #ff007f', paddingBottom: '0.5rem' }}>📏 Tabla de Dimensiones</h3>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', fontSize: '0.95rem', lineHeight: '1.6' }}>
+              <div>
+                <h4 style={{ color: '#ff007f', marginBottom: '0.3rem' }}>👕 Polera Polo Cuello Redondo (Hombres)</h4>
+                <p>• <strong>S:</strong> 46 cm (ancho) x 68 cm (largo)</p>
+                <p>• <strong>M:</strong> 51 cm (ancho) x 73 cm (largo)</p>
+                <p>• <strong>L:</strong> 56 cm (ancho) x 75 cm (largo)</p>
+                <p>• <strong>XL:</strong> 61 cm (ancho) x 76 cm (largo)</p>
+                <p>• <strong>2XL:</strong> 66 cm (ancho) x 79 cm (largo)</p>
+                <p>• <strong>3XL:</strong> 71 cm (ancho) x 83 cm (largo)</p>
+                <p>• <strong>4XL:</strong> 75 cm (ancho) x 86 cm (largo)</p>
+                <p>• <strong>5XL:</strong> 80 cm (ancho) x 89 cm (largo)</p>
+              </div>
+
+              <div>
+                <h4 style={{ color: '#ff007f', marginBottom: '0.3rem' }}>👕 Polera Premium Cuello Redondo (Hombres)</h4>
+                <p>• <strong>S:</strong> 45 cm (ancho) x 69 cm (largo)</p>
+                <p>• <strong>M:</strong> 49 cm (ancho) x 73 cm (largo)</p>
+                <p>• <strong>L:</strong> 54 cm (ancho) x 76 cm (largo)</p>
+                <p>• <strong>XL:</strong> 59 cm (ancho) x 77 cm (largo)</p>
+                <p>• <strong>2XL:</strong> 64 cm (ancho) x 80 cm (largo)</p>
+                <p>• <strong>3XL:</strong> 71 cm (ancho) x 83 cm (largo)</p>
+              </div>
+
+              <div>
+                <h4 style={{ color: '#ff007f', marginBottom: '0.3rem' }}>👕 Polera Oversize (Hombres)</h4>
+                <p>• <strong>S:</strong> 59 cm (ancho) x 71.5 cm (largo)</p>
+                <p>• <strong>M:</strong> 64 cm (ancho) x 74 cm (largo)</p>
+                <p>• <strong>L:</strong> 69 cm (ancho) x 76.5 cm (largo)</p>
+                <p>• <strong>XL:</strong> 74 cm (ancho) x 79 cm (largo)</p>
+                <p>• <strong>2XL:</strong> 79 cm (ancho) x 81.5 cm (largo)</p>
+              </div>
+
+              <div>
+                <h4 style={{ color: '#ff007f', marginBottom: '0.3rem' }}>👚 Polera Mujer Cuello Redondo</h4>
+                <p>• <strong>XS:</strong> 38 cm (ancho) x 59 cm (largo)</p>
+                <p>• <strong>S:</strong> 43 cm (ancho) x 64.5 cm (largo)</p>
+                <p>• <strong>M:</strong> 48.5 cm (ancho) x 66 cm (largo)</p>
+                <p>• <strong>L:</strong> 53.5 cm (ancho) x 69 cm (largo)</p>
+                <p>• <strong>XL:</strong> 58.5 cm (ancho) x 71.5 cm (largo)</p>
+                <p>• <strong>2XL:</strong> 60.5 cm (ancho) x 73.5 cm (largo)</p>
+              </div>
+
+              <div>
+                <h4 style={{ color: '#ff007f', marginBottom: '0.3rem' }}>🧥 Polerón Canguro Premium (Hombres)</h4>
+                <p>• <strong>S:</strong> 46 cm (ancho) x 70 cm (largo)</p>
+                <p>• <strong>M:</strong> 51 cm (ancho) x 73 cm (largo)</p>
+                <p>• <strong>L:</strong> 56 cm (ancho) x 76 cm (largo)</p>
+                <p>• <strong>XL:</strong> 61 cm (ancho) x 78 cm (largo)</p>
+                <p>• <strong>2XL:</strong> 66 cm (ancho) x 81 cm (largo)</p>
+                <p>• <strong>3XL:</strong> 68 cm (ancho) x 83 cm (largo)</p>
+              </div>
+            </div>
+
+            <button onClick={() => setMostrarDimensionesModal(false)} style={{ width: '100%', background: '#111', color: '#fff', border: 'none', padding: '0.8rem', fontWeight: 'bold', cursor: 'pointer', borderRadius: '4px', marginTop: '1.5rem', textTransform: 'uppercase' }}>
+              Cerrar Tabla
             </button>
           </div>
         </div>
@@ -302,7 +348,7 @@ function App() {
             
             <div style={{ margin: '1rem 0' }}>
               <strong>Tallas Disponibles:</strong>
-              <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
+              <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem', flexWrap: 'wrap' }}>
                 {productoDetalle.tallas.map((t, i) => (
                   <button 
                     key={i} 

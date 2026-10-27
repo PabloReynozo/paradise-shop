@@ -269,66 +269,66 @@ function App() {
         </div>
       </section>
 
-      {/* Modal Tabla de Dimensiones Oficial */}
+      {/* Modal Tabla de Dimensiones Completa Oficial */}
       {mostrarDimensionesModal && (
         <div className="modal-overlay" onClick={() => setMostrarDimensionesModal(false)} style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.7)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000, padding: '1rem' }}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()} style={{ background: '#fff', padding: '2rem', borderRadius: '8px', maxWidth: '650px', width: '100%', color: '#111', maxHeight: '80vh', overflowY: 'auto' }}>
-            <h3 style={{ marginBottom: '1rem', borderBottom: '2px solid #ff007f', paddingBottom: '0.5rem' }}>📏 Tabla de Dimensiones</h3>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()} style={{ background: '#fff', padding: '2rem', borderRadius: '8px', maxWidth: '650px', width: '100%', color: '#111', maxHeight: '85vh', overflowY: 'auto' }}>
+            <h3 style={{ marginBottom: '1.2rem', borderBottom: '2px solid #ff007f', paddingBottom: '0.5rem', fontSize: '1.3rem' }}>📏 Tabla de Dimensiones</h3>
             
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', fontSize: '0.95rem', lineHeight: '1.6' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem', fontSize: '0.95rem', lineHeight: '1.6' }}>
               <div>
-                <h4 style={{ color: '#ff007f', marginBottom: '0.3rem' }}>👕 Polera Polo Cuello Redondo (Hombres)</h4>
-                <p>• <strong>S:</strong> 46 cm (ancho) x 68 cm (largo)</p>
-                <p>• <strong>M:</strong> 51 cm (ancho) x 73 cm (largo)</p>
-                <p>• <strong>L:</strong> 56 cm (ancho) x 75 cm (largo)</p>
-                <p>• <strong>XL:</strong> 61 cm (ancho) x 76 cm (largo)</p>
-                <p>• <strong>2XL:</strong> 66 cm (ancho) x 79 cm (largo)</p>
-                <p>• <strong>3XL:</strong> 71 cm (ancho) x 83 cm (largo)</p>
-                <p>• <strong>4XL:</strong> 75 cm (ancho) x 86 cm (largo)</p>
-                <p>• <strong>5XL:</strong> 80 cm (ancho) x 89 cm (largo)</p>
+                <h4 style={{ color: '#ff007f', marginBottom: '0.4rem', fontSize: '1.05rem' }}>Polera Polo Cuello Redondo (Hombres)</h4>
+                <p>• S: 46 cm (ancho) x 68 cm (largo)</p>
+                <p>• M: 51 cm (ancho) x 73 cm (largo)</p>
+                <p>• L: 56 cm (ancho) x 75 cm (largo)</p>
+                <p>• XL: 61 cm (ancho) x 76 cm (largo)</p>
+                <p>• 2XL: 66 cm (ancho) x 79 cm (largo)</p>
+                <p>• 3XL: 71 cm (ancho) x 83 cm (largo)</p>
+                <p>• 4XL: 75 cm (ancho) x 86 cm (largo)</p>
+                <p>• 5XL: 80 cm (ancho) x 89 cm (largo)</p>
               </div>
 
               <div>
-                <h4 style={{ color: '#ff007f', marginBottom: '0.3rem' }}>👕 Polera Premium Cuello Redondo (Hombres)</h4>
-                <p>• <strong>S:</strong> 45 cm (ancho) x 69 cm (largo)</p>
-                <p>• <strong>M:</strong> 49 cm (ancho) x 73 cm (largo)</p>
-                <p>• <strong>L:</strong> 54 cm (ancho) x 76 cm (largo)</p>
-                <p>• <strong>XL:</strong> 59 cm (ancho) x 77 cm (largo)</p>
-                <p>• <strong>2XL:</strong> 64 cm (ancho) x 80 cm (largo)</p>
-                <p>• <strong>3XL:</strong> 71 cm (ancho) x 83 cm (largo)</p>
+                <h4 style={{ color: '#ff007f', marginBottom: '0.4rem', fontSize: '1.05rem' }}>Polera Premium Cuello Redondo (Hombres)</h4>
+                <p>• S: 45 cm (ancho) x 69 cm (largo)</p>
+                <p>• M: 49 cm (ancho) x 73 cm (largo)</p>
+                <p>• L: 54 cm (ancho) x 76 cm (largo)</p>
+                <p>• XL: 59 cm (ancho) x 77 cm (largo)</p>
+                <p>• 2XL: 64 cm (ancho) x 80 cm (largo)</p>
+                <p>• 3XL: 71 cm (ancho) x 83 cm (largo)</p>
               </div>
 
               <div>
-                <h4 style={{ color: '#ff007f', marginBottom: '0.3rem' }}>👕 Polera Oversize (Hombres)</h4>
-                <p>• <strong>S:</strong> 59 cm (ancho) x 71.5 cm (largo)</p>
-                <p>• <strong>M:</strong> 64 cm (ancho) x 74 cm (largo)</p>
-                <p>• <strong>L:</strong> 69 cm (ancho) x 76.5 cm (largo)</p>
-                <p>• <strong>XL:</strong> 74 cm (ancho) x 79 cm (largo)</p>
-                <p>• <strong>2XL:</strong> 79 cm (ancho) x 81.5 cm (largo)</p>
+                <h4 style={{ color: '#ff007f', marginBottom: '0.4rem', fontSize: '1.05rem' }}>Polera Oversize (Hombres)</h4>
+                <p>• S: 59 cm (ancho) x 71.5 cm (largo)</p>
+                <p>• M: 64 cm (ancho) x 74 cm (largo)</p>
+                <p>• L: 69 cm (ancho) x 76.5 cm (largo)</p>
+                <p>• XL: 74 cm (ancho) x 79 cm (largo)</p>
+                <p>• 2XL: 79 cm (ancho) x 81.5 cm (largo)</p>
               </div>
 
               <div>
-                <h4 style={{ color: '#ff007f', marginBottom: '0.3rem' }}>👚 Polera Mujer Cuello Redondo</h4>
-                <p>• <strong>XS:</strong> 38 cm (ancho) x 59 cm (largo)</p>
-                <p>• <strong>S:</strong> 43 cm (ancho) x 64.5 cm (largo)</p>
-                <p>• <strong>M:</strong> 48.5 cm (ancho) x 66 cm (largo)</p>
-                <p>• <strong>L:</strong> 53.5 cm (ancho) x 69 cm (largo)</p>
-                <p>• <strong>XL:</strong> 58.5 cm (ancho) x 71.5 cm (largo)</p>
-                <p>• <strong>2XL:</strong> 60.5 cm (ancho) x 73.5 cm (largo)</p>
+                <h4 style={{ color: '#ff007f', marginBottom: '0.4rem', fontSize: '1.05rem' }}>Polera Mujer Cuello Redondo</h4>
+                <p>• XS: 38 cm (ancho) x 59 cm (largo)</p>
+                <p>• S: 43 cm (ancho) x 64.5 cm (largo)</p>
+                <p>• M: 48.5 cm (ancho) x 66 cm (largo)</p>
+                <p>• L: 53.5 cm (ancho) x 69 cm (largo)</p>
+                <p>• XL: 58.5 cm (ancho) x 71.5 cm (largo)</p>
+                <p>• 2XL: 60.5 cm (ancho) x 73.5 cm (largo)</p>
               </div>
 
               <div>
-                <h4 style={{ color: '#ff007f', marginBottom: '0.3rem' }}>🧥 Polerón Canguro Premium (Hombres)</h4>
-                <p>• <strong>S:</strong> 46 cm (ancho) x 70 cm (largo)</p>
-                <p>• <strong>M:</strong> 51 cm (ancho) x 73 cm (largo)</p>
-                <p>• <strong>L:</strong> 56 cm (ancho) x 76 cm (largo)</p>
-                <p>• <strong>XL:</strong> 61 cm (ancho) x 78 cm (largo)</p>
-                <p>• <strong>2XL:</strong> 66 cm (ancho) x 81 cm (largo)</p>
-                <p>• <strong>3XL:</strong> 68 cm (ancho) x 83 cm (largo)</p>
+                <h4 style={{ color: '#ff007f', marginBottom: '0.4rem', fontSize: '1.05rem' }}>Polerón Canguro Premium (Hombres)</h4>
+                <p>• S: 46 cm (ancho) x 70 cm (largo)</p>
+                <p>• M: 51 cm (ancho) x 73 cm (largo)</p>
+                <p>• L: 56 cm (ancho) x 76 cm (largo)</p>
+                <p>• XL: 61 cm (ancho) x 78 cm (largo)</p>
+                <p>• 2XL: 66 cm (ancho) x 81 cm (largo)</p>
+                <p>• 3XL: 68 cm (ancho) x 83 cm (largo)</p>
               </div>
             </div>
 
-            <button onClick={() => setMostrarDimensionesModal(false)} style={{ width: '100%', background: '#111', color: '#fff', border: 'none', padding: '0.8rem', fontWeight: 'bold', cursor: 'pointer', borderRadius: '4px', marginTop: '1.5rem', textTransform: 'uppercase' }}>
+            <button onClick={() => setMostrarDimensionesModal(false)} style={{ width: '100%', background: '#111', color: '#fff', border: 'none', padding: '0.9rem', fontWeight: 'bold', cursor: 'pointer', borderRadius: '4px', marginTop: '1.5rem', textTransform: 'uppercase' }}>
               Cerrar Tabla
             </button>
           </div>

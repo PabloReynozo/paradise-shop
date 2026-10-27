@@ -112,31 +112,6 @@ const baseDeDatosProductos = {
   ]
 };
 
-const CategoryCard = ({ img, title, onClick }) => (
-  <div onClick={onClick} className="category-card" style={{ cursor: 'pointer' }}>
-    <div className="category-image-container">
-      <img src={img} alt={title} />
-    </div>
-    <div className="category-title">{title}</div>
-  </div>
-);
-
-const ProductCard = ({ img, title, price, onComprar, onAbrirDetalle }) => (
-  <div className="product-card">
-    <div className="product-image-container" onClick={onAbrirDetalle} style={{ cursor: 'pointer' }}>
-      <img src={img} alt={title} />
-    </div>
-    <div className="product-info">
-      <h4 className="product-title" onClick={onAbrirDetalle} style={{ cursor: 'pointer' }}>{title}</h4>
-      <p className="product-price">{price}</p>
-      <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
-        <button onClick={onAbrirDetalle} style={{ flex: 1, backgroundColor: '#111', color: '#fff', border: 'none', padding: '0.6rem', borderRadius: '4px', fontWeight: 'bold', fontSize: '0.75rem', textTransform: 'uppercase', cursor: 'pointer' }}>Ver Detalle</button>
-        <button onClick={onComprar} className="buy-button" style={{ flex: 1 }}>Comprar</button>
-      </div>
-    </div>
-  </div>
-);
-
 function App() {
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null);
   const [busqueda, setBusqueda] = useState('');
@@ -161,24 +136,24 @@ function App() {
 
   return (
     <div className="app-container">
-      <header className="app-header">
-        <div className="logo" onClick={() => { setCategoriaSeleccionada(null); setBusqueda(''); }} style={{ cursor: 'pointer' }}>
-          PARADISE <span>SHOP</span>.CL
+      <header className="app-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem 2rem', backgroundColor: '#111', color: '#fff' }}>
+        <div className="logo" onClick={() => { setCategoriaSeleccionada(null); setBusqueda(''); }} style={{ cursor: 'pointer', fontWeight: 'bold', fontSize: '1.2rem' }}>
+          PARADISE <span style={{ color: '#ff007f' }}>SHOP</span>.CL
         </div>
-        <nav className="nav-links">
-          <button onClick={() => { setCategoriaSeleccionada(null); setBusqueda(''); }}>Inicio</button>
-          <button onClick={() => setMostrarBuscador(!mostrarBuscador)}>Catálogo</button>
+        <nav className="nav-links" style={{ display: 'flex', gap: '1.5rem' }}>
+          <button onClick={() => { setCategoriaSeleccionada(null); setBusqueda(''); }} style={{ background: 'none', border: 'none', color: '#fff', cursor: 'pointer', fontSize: '1rem' }}>Inicio</button>
+          <button onClick={() => setMostrarBuscador(!mostrarBuscador)} style={{ background: 'none', border: 'none', color: '#fff', cursor: 'pointer', fontSize: '1rem' }}>Catálogo</button>
         </nav>
         <div className="header-actions">
-          <button onClick={() => setMostrarCarritoModal(true)} className="cart-icon-btn">
+          <button onClick={() => setMostrarCarritoModal(true)} className="cart-icon-btn" style={{ background: '#ff007f', color: '#fff', border: 'none', padding: '0.5rem 1rem', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>
             🛒 <span className="cart-count">{carrito.length}</span>
           </button>
         </div>
       </header>
 
-      <section className="hero-section">
-        <h1>COLECCIÓN EXCLUSIVA PARADISE SHOP</h1>
-        <p>Encuentra tus diseños favoritos en poleras, polerones, gorras, cuadros y más.</p>
+      <section className="hero-section" style={{ textAlign: 'center', padding: '2.5rem 1rem' }}>
+        <h1 style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>COLECCIÓN EXCLUSIVA PARADISE SHOP</h1>
+        <p style={{ color: '#666' }}>Encuentra tus diseños favoritos en poleras, polerones, gorras, cuadros y más.</p>
         {mostrarBuscador && (
           <div style={{ marginTop: '1rem' }}>
             <input 
@@ -186,30 +161,65 @@ function App() {
               placeholder="Buscar producto..." 
               value={busqueda} 
               onChange={(e) => setBusqueda(e.target.value)} 
-              style={{ padding: '0.8rem', width: '300px', borderRadius: '4px', border: '1px solid #ccc' }}
+              style={{ padding: '0.8rem', width: '300px', borderRadius: '4px', border: '1px solid #d5cbc0' }}
             />
           </div>
         )}
       </section>
 
       {!categoriaSeleccionada && busqueda === '' && (
-        <section className="categories-section">
-          <h2>CATEGORÍAS OFICIALES</h2>
-          <div className="categories-grid">
-            <CategoryCard img={imgHombre} title="HOMBRE / UNISEX" onClick={() => setCategoriaSeleccionada('hombre')} />
-            <CategoryCard img={imgMujer} title="MUJER" onClick={() => setCategoriaSeleccionada('mujer')} />
-            <CategoryCard img={imgGorras} title="GORRAS / JOCKEYS" onClick={() => setCategoriaSeleccionada('gorras')} />
-            <CategoryCard img={imgTotebag} title="TOTE BAGS" onClick={() => setCategoriaSeleccionada('totebag')} />
-            <CategoryCard img={imgCuadros} title="CUADROS DECORATIVOS" onClick={() => setCategoriaSeleccionada('cuadros')} />
-            <CategoryCard img={imgLlaveros} title="LLAVEROS" onClick={() => setCategoriaSeleccionada('llaveros')} />
-            <CategoryCard img={imgMousepad} title="MOUSE PADS" onClick={() => setCategoriaSeleccionada('mousepad')} />
+        <section className="categories-section" style={{ marginBottom: '3rem' }}>
+          <h2 style={{ textAlign: 'center', marginBottom: '1.5rem', fontSize: '1.4rem' }}>CATEGORÍAS OFICIALES</h2>
+          <div className="product-grid">
+            <div onClick={() => setCategoriaSeleccionada('hombre')} className="product-card" style={{ cursor: 'pointer' }}>
+              <div className="product-image-container"><img src={imgHombre} alt="Hombre" /></div>
+              <div className="product-info" style={{ textAlign: 'center' }}>
+                <h4 className="product-title">HOMBRE / UNISEX</h4>
+              </div>
+            </div>
+            <div onClick={() => setCategoriaSeleccionada('mujer')} className="product-card" style={{ cursor: 'pointer' }}>
+              <div className="product-image-container"><img src={imgMujer} alt="Mujer" /></div>
+              <div className="product-info" style={{ textAlign: 'center' }}>
+                <h4 className="product-title">MUJER</h4>
+              </div>
+            </div>
+            <div onClick={() => setCategoriaSeleccionada('gorras')} className="product-card" style={{ cursor: 'pointer' }}>
+              <div className="product-image-container"><img src={imgGorras} alt="Gorras" /></div>
+              <div className="product-info" style={{ textAlign: 'center' }}>
+                <h4 className="product-title">GORRAS / JOCKEYS</h4>
+              </div>
+            </div>
+            <div onClick={() => setCategoriaSeleccionada('totebag')} className="product-card" style={{ cursor: 'pointer' }}>
+              <div className="product-image-container"><img src={imgTotebag} alt="Tote Bags" /></div>
+              <div className="product-info" style={{ textAlign: 'center' }}>
+                <h4 className="product-title">TOTE BAGS</h4>
+              </div>
+            </div>
+            <div onClick={() => setCategoriaSeleccionada('cuadros')} className="product-card" style={{ cursor: 'pointer' }}>
+              <div className="product-image-container"><img src={imgCuadros} alt="Cuadros" /></div>
+              <div className="product-info" style={{ textAlign: 'center' }}>
+                <h4 className="product-title">CUADROS DECORATIVOS</h4>
+              </div>
+            </div>
+            <div onClick={() => setCategoriaSeleccionada('llaveros')} className="product-card" style={{ cursor: 'pointer' }}>
+              <div className="product-image-container"><img src={imgLlaveros} alt="Llaveros" /></div>
+              <div className="product-info" style={{ textAlign: 'center' }}>
+                <h4 className="product-title">LLAVEROS</h4>
+              </div>
+            </div>
+            <div onClick={() => setCategoriaSeleccionada('mousepad')} className="product-card" style={{ cursor: 'pointer' }}>
+              <div className="product-image-container"><img src={imgMousepad} alt="Mousepads" /></div>
+              <div className="product-info" style={{ textAlign: 'center' }}>
+                <h4 className="product-title">MOUSE PADS</h4>
+              </div>
+            </div>
           </div>
         </section>
       )}
 
-      <section className="products-section">
+      <section className="products-section" style={{ padding: '0 2rem', maxWidth: '1200px', margin: '0 auto' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-          <h2>{categoriaSeleccionada ? `Categoría: ${categoriaSeleccionada.toUpperCase()}` : 'CATÁLOGO GENERAL DE PRODUCTOS'}</h2>
+          <h2 style={{ fontSize: '1.4rem' }}>{categoriaSeleccionada ? `Categoría: ${categoriaSeleccionada.toUpperCase()}` : 'CATÁLOGO GENERAL DE PRODUCTOS'}</h2>
           {categoriaSeleccionada && (
             <button onClick={() => setCategoriaSeleccionada(null)} style={{ padding: '0.5rem 1rem', background: '#111', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
               ← Ver Todas las Categorías
@@ -217,16 +227,21 @@ function App() {
           )}
         </div>
 
-        <div className="products-grid">
+        <div className="product-grid" style={{ padding: 0 }}>
           {resultadosBusqueda.map((prod, idx) => (
-            <ProductCard 
-              key={idx} 
-              img={prod.imagen} 
-              title={prod.titulo} 
-              price={prod.precio} 
-              onComprar={() => agregarAlCarrito(prod)} 
-              onAbrirDetalle={() => setProductoDetalle(prod)} 
-            />
+            <div key={idx} className="product-card">
+              <div className="product-image-container" onClick={() => setProductoDetalle(prod)} style={{ cursor: 'pointer' }}>
+                <img src={prod.imagen} alt={prod.titulo} />
+              </div>
+              <div className="product-info">
+                <h4 className="product-title" onClick={() => setProductoDetalle(prod)} style={{ cursor: 'pointer' }}>{prod.titulo}</h4>
+                <p className="product-price">{prod.precio}</p>
+                <div style={{ display: 'flex', gap: '0.5rem', marginTop: 'auto' }}>
+                  <button onClick={() => setProductoDetalle(prod)} style={{ flex: 1, backgroundColor: '#333', color: '#fff', border: 'none', padding: '0.6rem', borderRadius: '4px', fontWeight: 'bold', fontSize: '0.75rem', textTransform: 'uppercase', cursor: 'pointer' }}>Ver Detalle</button>
+                  <button onClick={() => agregarAlCarrito(prod)} className="buy-button" style={{ flex: 1, marginTop: 0 }}>Comprar</button>
+                </div>
+              </div>
+            </div>
           ))}
         </div>
       </section>
@@ -235,7 +250,7 @@ function App() {
         <div className="modal-overlay" onClick={() => setProductoDetalle(null)} style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.7)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000 }}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()} style={{ background: '#fff', padding: '2rem', borderRadius: '8px', maxWidth: '500px', width: '90%', color: '#111' }}>
             <h3>{productoDetalle.titulo}</h3>
-            <p style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#ff007f' }}>{productoDetalle.precio}</p>
+            <p style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#ff007f', margin: '0.5rem 0' }}>{productoDetalle.precio}</p>
             <p><strong>Material:</strong> {productoDetalle.material}</p>
             <p><strong>Tejido:</strong> {productoDetalle.tejido}</p>
             <p><strong>Estampado:</strong> {productoDetalle.estampado}</p>
@@ -243,7 +258,7 @@ function App() {
             
             <div style={{ margin: '1rem 0' }}>
               <strong>Tallas Disponibles:</strong>
-              <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
+              <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem', flexWrap: 'wrap' }}>
                 {productoDetalle.tallas.map((t, i) => (
                   <button 
                     key={i} 

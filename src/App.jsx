@@ -120,29 +120,33 @@ function App() {
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null);
   const [busqueda, setBusqueda] = useState('');
   const [mostrarBuscador, setMostrarBuscador] = useState(false);
+  const [mostrarDimensionesModal, setMostrarDimensionesModal] = useState(false);
   const [carrito, setCarrito] = useState([]);
   const [mostrarCarritoModal, setMostrarCarritoModal] = useState(false);
   const [productoDetalle, setProductoDetalle] = useState(null);
   const [tallaSeleccionada, setTallaSeleccionada] = useState('');
 
-  // Referencias para el desplazamiento suave (scroll)
   const topRef = useRef(null);
   const productosRef = useRef(null);
+  const categoriasRef = useRef(null);
 
   const irAInicio = () => {
     setCategoriaSeleccionada(null);
     setBusqueda('');
-    if (topRef.current) {
-      topRef.current.scrollIntoView({ behavior: 'smooth' });
+    if (topRef.current) topRef.current.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const irACategorias = () => {
+    setCategoriaSeleccionada(null);
+    if (categoriasRef.current) {
+      categoriasRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
-  const seleccionarCategoriaConScroll = (cat) => {
+  const seleccionarCategoria = (cat) => {
     setCategoriaSeleccionada(cat);
     setTimeout(() => {
-      if (productosRef.current) {
-        productosRef.current.scrollIntoView({ behavior: 'smooth' });
-      }
+      if (productosRef.current) productosRef.current.scrollIntoView({ behavior: 'smooth' });
     }, 150);
   };
 
@@ -161,23 +165,30 @@ function App() {
 
   return (
     <div className="app-container" ref={topRef}>
-      <header className="app-header">
-        <div className="logo" onClick={irAInicio} style={{ cursor: 'pointer' }}>
-          PARADISE <span>SHOP</span>.CL
+      {/* Header / Barra de Navegación Exacta */}
+      <header className="app-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem 2rem', backgroundColor: '#111', color: '#fff' }}>
+        <div className="logo" onClick={irAInicio} style={{ cursor: 'pointer', fontWeight: 'bold', fontSize: '1.2rem' }}>
+          PARADISE <span style={{ color: '#ff007f' }}>SHOP</span>.CL
         </div>
-        <nav className="nav-links">
-          <button onClick={irAInicio}>Inicio</button>
-          <button onClick={() => { setCategoriaSeleccionada(null); if(productosRef.current) productosRef.current.scrollIntoView({behavior: 'smooth'}); }}>Categorías</button>
-          <button onClick={() => setMostrarBuscador(!mostrarBuscador)}>Catálogo</button>
+        
+        <nav className="nav-links" style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
+          <button onClick={irAInicio} style={{ background: 'none', border: 'none', color: '#fff', cursor: 'pointer', fontSize: '1rem' }}>Inicio</button>
+          <button onClick={irACategorias} style={{ background: 'none', border: 'none', color: '#fff', cursor: 'pointer', fontSize: '1rem' }}>Categorías</button>
+          <button onClick={() => { setCategoriaSeleccionada(null); if(productosRef.current) productosRef.current.scrollIntoView({behavior: 'smooth'}); }} style={{ background: 'none', border: 'none', color: '#fff', cursor: 'pointer', fontSize: '1rem' }}>Catálogo</button>
+          <button onClick={() => setMostrarDimensionesModal(true)} style={{ background: 'none', border: 'none', color: '#fff', cursor: 'pointer', fontSize: '1rem' }}>Tabla de dimensiones</button>
         </nav>
-        <div className="header-actions">
-          <button onClick={() => setMostrarCarritoModal(true)} className="cart-icon-btn">
+
+        <div className="header-actions" style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+          <button onClick={() => setMostrarBuscador(!mostrarBuscador)} style={{ background: 'none', border: 'none', color: '#fff', cursor: 'pointer', fontSize: '1.2rem', title: 'Buscar' }}>
+            🔍
+          </button>
+          <button onClick={() => setMostrarCarritoModal(true)} className="cart-icon-btn" style={{ background: '#ff007f', color: '#fff', border: 'none', padding: '0.5rem 1rem', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>
             🛒 <span className="cart-count">{carrito.length}</span>
           </button>
         </div>
       </header>
 
-      <section className="hero-section">
+      <section className="hero-section" style={{ textAlign: 'center', padding: '2.5rem 1rem' }}>
         <h1>COLECCIÓN EXCLUSIVA PARADISE SHOP</h1>
         <p>Encuentra tus diseños favoritos en poleras, polerones, gorras, cuadros y más.</p>
         {mostrarBuscador && (
@@ -187,41 +198,41 @@ function App() {
               placeholder="Buscar producto..." 
               value={busqueda} 
               onChange={(e) => setBusqueda(e.target.value)} 
-              style={{ padding: '0.8rem', width: '300px', borderRadius: '4px', border: '1px solid #ccc' }}
+              style={{ padding: '0.8rem', width: '300px', borderRadius: '4px', border: '1px solid #d5cbc0' }}
             />
           </div>
         )}
       </section>
 
       {!categoriaSeleccionada && busqueda === '' && (
-        <section className="categories-section">
+        <section className="categories-section" ref={categoriasRef} style={{ marginBottom: '3rem' }}>
           <h2>CATEGORÍAS OFICIALES</h2>
           <div className="categories-grid">
-            <div onClick={() => seleccionarCategoriaConScroll('hombre')} className="category-card" style={{ cursor: 'pointer' }}>
+            <div onClick={() => seleccionarCategoria('hombre')} className="category-card" style={{ cursor: 'pointer' }}>
               <div className="category-image-container"><img src={imgHombre} alt="Hombre" /></div>
               <div className="category-title">HOMBRE / UNISEX</div>
             </div>
-            <div onClick={() => seleccionarCategoriaConScroll('mujer')} className="category-card" style={{ cursor: 'pointer' }}>
+            <div onClick={() => seleccionarCategoria('mujer')} className="category-card" style={{ cursor: 'pointer' }}>
               <div className="category-image-container"><img src={imgMujer} alt="Mujer" /></div>
               <div className="category-title">MUJER</div>
             </div>
-            <div onClick={() => seleccionarCategoriaConScroll('gorras')} className="category-card" style={{ cursor: 'pointer' }}>
+            <div onClick={() => seleccionarCategoria('gorras')} className="category-card" style={{ cursor: 'pointer' }}>
               <div className="category-image-container"><img src={imgGorras} alt="Gorras" /></div>
               <div className="category-title">GORRAS / JOCKEYS</div>
             </div>
-            <div onClick={() => seleccionarCategoriaConScroll('totebag')} className="category-card" style={{ cursor: 'pointer' }}>
+            <div onClick={() => seleccionarCategoria('totebag')} className="category-card" style={{ cursor: 'pointer' }}>
               <div className="category-image-container"><img src={imgTotebag} alt="Tote Bags" /></div>
               <div className="category-title">TOTE BAGS</div>
             </div>
-            <div onClick={() => seleccionarCategoriaConScroll('cuadros')} className="category-card" style={{ cursor: 'pointer' }}>
+            <div onClick={() => seleccionarCategoria('cuadros')} className="category-card" style={{ cursor: 'pointer' }}>
               <div className="category-image-container"><img src={imgCuadros} alt="Cuadros" /></div>
               <div className="category-title">CUADROS DECORATIVOS</div>
             </div>
-            <div onClick={() => seleccionarCategoriaConScroll('llaveros')} className="category-card" style={{ cursor: 'pointer' }}>
+            <div onClick={() => seleccionarCategoria('llaveros')} className="category-card" style={{ cursor: 'pointer' }}>
               <div className="category-image-container"><img src={imgLlaveros} alt="Llaveros" /></div>
               <div className="category-title">LLAVEROS</div>
             </div>
-            <div onClick={() => seleccionarCategoriaConScroll('mousepad')} className="category-card" style={{ cursor: 'pointer' }}>
+            <div onClick={() => seleccionarCategoria('mousepad')} className="category-card" style={{ cursor: 'pointer' }}>
               <div className="category-image-container"><img src={imgMousepad} alt="Mousepads" /></div>
               <div className="category-title">MOUSE PADS</div>
             </div>
@@ -258,6 +269,27 @@ function App() {
         </div>
       </section>
 
+      {/* Modal Tabla de Dimensiones */}
+      {mostrarDimensionesModal && (
+        <div className="modal-overlay" onClick={() => setMostrarDimensionesModal(false)} style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.7)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000 }}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()} style={{ background: '#fff', padding: '2rem', borderRadius: '8px', maxWidth: '500px', width: '90%', color: '#111' }}>
+            <h3>📏 Tabla de Dimensiones</h3>
+            <p style={{ margin: '1rem 0' }}>Revisa las medidas de nuestras poleras oversize y estándar:</p>
+            <ul style={{ paddingLeft: '1.2rem', lineHeight: '1.8' }}>
+              <li><strong>Talla S:</strong> Ancho 50 cm | Largo 70 cm</li>
+              <li><strong>Talla M:</strong> Ancho 52 cm | Largo 72 cm</li>
+              <li><strong>Talla L:</strong> Ancho 54 cm | Largo 74 cm</li>
+              <li><strong>Talla XL:</strong> Ancho 56 cm | Largo 76 cm</li>
+              <li><strong>Talla 2XL:</strong> Ancho 58 cm | Largo 78 cm</li>
+            </ul>
+            <button onClick={() => setMostrarDimensionesModal(false)} style={{ width: '100%', background: '#111', color: '#fff', border: 'none', padding: '0.8rem', fontWeight: 'bold', cursor: 'pointer', borderRadius: '4px', marginTop: '1.5rem' }}>
+              Cerrar
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Modal Detalle de Producto */}
       {productoDetalle && (
         <div className="modal-overlay" onClick={() => setProductoDetalle(null)} style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.7)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000 }}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()} style={{ background: '#fff', padding: '2rem', borderRadius: '8px', maxWidth: '500px', width: '90%', color: '#111' }}>
@@ -298,6 +330,7 @@ function App() {
         </div>
       )}
 
+      {/* Modal Carrito */}
       {mostrarCarritoModal && (
         <div className="modal-overlay" style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.7)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000 }}>
           <div className="modal-content" style={{ background: '#fff', padding: '2rem', borderRadius: '8px', maxWidth: '500px', width: '90%', color: '#111' }}>

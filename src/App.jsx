@@ -130,8 +130,8 @@ function App() {
   const productosRef = useRef(null);
   const categoriasRef = useRef(null);
 
-  // ⚠️ AQUÍ PUEDES PEGAR TU LINK DE PAGO OFICIAL DE MERCADO PAGO ⚠️
-  const linkPagoMercadoPago = "https://www.mercadopago.cl"; 
+  // Link de pago oficial de Paradise Shop en Mercado Pago
+  const linkPagoMercadoPago = "https://link.mercadopago.cl/paradiseshopchile"; 
 
   const irAInicio = () => {
     setCategoriaSeleccionada(null);

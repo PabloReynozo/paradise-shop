@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import './App.css';
 
+// Importación de imágenes de portada para las categorías
 import imgHombre from './images/hombre.png';
 import imgMujer from './images/mujer.png';
 import imgGorras from './images/gorras.png';
@@ -9,6 +10,9 @@ import imgCuadros from './images/cuadros.png';
 import imgLlaveros from './images/llaveros.png';
 import imgMousepad from './images/mousepad.png';
 
+// ==========================================
+// BASE DE DATOS COMPLETA - PARADISE SHOP CL
+// ==========================================
 const baseDeDatosProductos = {
   hombre: [
     { titulo: "Polera Oversize 300 Blanca", precio: "$23.990 CLP", imagen: "/hombre/Polera%20Oversize%20300%20Blanca.png", material: "80% Algodón y 20% Poliéster", tejido: "Tejido Interlock 280 grs", tallas: ["S", "M", "L", "XL", "2XL"], estampado: "Impresión Digital DTF Textil HD", corte: "Oversize Fit Streetwear" },
@@ -112,18 +116,118 @@ const baseDeDatosProductos = {
   ]
 };
 
+// Componente para tarjetas de categoría superior
+const CategoryCard = ({ img, title, onClick, isActive }) => (
+  <div 
+    onClick={onClick}
+    className="product-card" 
+    style={{ 
+      cursor: 'pointer', 
+      border: isActive ? '2px solid #ff007f' : '1px solid #d5cbc0',
+      transform: isActive ? 'scale(1.02)' : 'scale(1)',
+      transition: 'all 0.2s ease'
+    }}
+  >
+    <div className="product-image-container">
+      <img src={img} alt={title} />
+    </div>
+    <div style={{ 
+      position: 'absolute', 
+      bottom: '1.5rem', 
+      left: '1.5rem', 
+      right: '1.5rem', 
+      backgroundColor: isActive ? '#ff007f' : '#111', 
+      color: '#fff', 
+      padding: '0.6rem', 
+      textAlign: 'center', 
+      textTransform: 'uppercase', 
+      fontWeight: 'bold', 
+      fontSize: '0.9rem', 
+      borderRadius: '4px', 
+      border: '1px solid #333',
+      transition: 'background-color 0.2s ease'
+    }}>
+      {title}
+    </div>
+  </div>
+);
+
+// Componente para tarjetas de producto individual
+const ProductCard = ({ img, title, price, onComprar, onAbrirDetalle }) => (
+  <div className="product-card">
+    <div className="product-image-container" onClick={onAbrirDetalle} style={{ cursor: 'pointer' }}>
+      <img src={img} alt={title} />
+    </div>
+    <div className="product-info">
+      <h4 className="product-title" onClick={onAbrirDetalle} style={{ cursor: 'pointer' }}>{title}</h4>
+      <p className="product-price">{price}</p>
+      <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
+        <button onClick={onAbrirDetalle} style={{ flex: 1, backgroundColor: '#111', color: '#fff', border: 'none', padding: '0.6rem', borderRadius: '4px', fontWeight: 'bold', fontSize: '0.75rem', textTransform: 'uppercase', cursor: 'pointer' }}>Ver Detalle</button>
+        <button onClick={onComprar} className="buy-button" style={{ flex: 1 }}>Comprar</button>
+      </div>
+    </div>
+  </div>
+);
+
 function App() {
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null);
   const [busqueda, setBusqueda] = useState('');
   const [mostrarBuscador, setMostrarBuscador] = useState(false);
+  
+  // Estados para el Carro de Compras y Modales
   const [carrito, setCarrito] = useState([]);
   const [mostrarCarritoModal, setMostrarCarritoModal] = useState(false);
+  
+  // Estado para la prenda seleccionada en detalle (Modal)
   const [productoDetalle, setProductoDetalle] = useState(null);
   const [tallaSeleccionada, setTallaSeleccionada] = useState('');
+  const [cantidad, setCantidad] = useState(1);
 
-  const agregarAlCarrito = (producto, talla = 'Única') => {
-    setCarrito([...carrito, { ...producto, tallaSeleccionada: talla }]);
+  // Referencias para scroll suave
+  const productosRef = useRef(null);
+
+  const agregarAlCarrito = (producto, talla = 'Única', cant = 1) => {
+    const itemExistenteIndex = carrito.findIndex(
+      item => item.titulo === producto.titulo && item.tallaSeleccionada === talla
+    );
+
+    if (itemExistenteIndex > -1) {
+      const nuevoCarrito = [...carrito];
+      nuevoCarrito[itemExistenteIndex].cantidad += cant;
+      setCarrito(nuevoCarrito);
+    } else {
+      setCarrito([...carrito, { ...producto, tallaSeleccionada: talla, cantidad: cant }]);
+    }
     setMostrarCarritoModal(true);
+  };
+
+  const cambiarCantidadCarrito = (index, delta) => {
+    const nuevoCarrito = [...carrito];
+    nuevoCarrito[index].cantidad += delta;
+    if (nuevoCarrito[index].cantidad <= 0) {
+      nuevoCarrito.splice(index, 1);
+    }
+    setCarrito(nuevoCarrito);
+  };
+
+  const calcularTotal = () => {
+    return carrito.reduce((acc, item) => {
+      const precioLimpio = parseInt(item.precio.replace(/[^0-9]/g, ''), 10);
+      return acc + (precioLimpio * item.cantidad);
+    }, 0);
+  };
+
+  const handleSeleccionarCategoria = (cat) => {
+    if (categoriaSeleccionada === cat) {
+      setCategoriaSeleccionada(null);
+    } else {
+      setCategoriaSeleccionada(cat);
+      setTimeout(() => {
+        if (productosRef.current) {
+          productosRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    }
   };
 
   const productosFiltrados = categoriaSeleccionada 
@@ -136,176 +240,175 @@ function App() {
 
   return (
     <div className="app-container">
-      <header className="app-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem 2rem', backgroundColor: '#111', color: '#fff' }}>
-        <div className="logo" onClick={() => { setCategoriaSeleccionada(null); setBusqueda(''); }} style={{ cursor: 'pointer', fontWeight: 'bold', fontSize: '1.2rem' }}>
+      {/* Header / Barra de Navegación */}
+      <header className="app-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.2rem 2.5rem', backgroundColor: '#111', color: '#fff', borderBottom: '3px solid #ff007f' }}>
+        <div className="logo" onClick={() => { setCategoriaSeleccionada(null); setBusqueda(''); }} style={{ cursor: 'pointer', fontWeight: '900', fontSize: '1.5rem', letterSpacing: '1px' }}>
           PARADISE <span style={{ color: '#ff007f' }}>SHOP</span>.CL
         </div>
-        <nav className="nav-links" style={{ display: 'flex', gap: '1.5rem' }}>
-          <button onClick={() => { setCategoriaSeleccionada(null); setBusqueda(''); }} style={{ background: 'none', border: 'none', color: '#fff', cursor: 'pointer', fontSize: '1rem' }}>Inicio</button>
-          <button onClick={() => setMostrarBuscador(!mostrarBuscador)} style={{ background: 'none', border: 'none', color: '#fff', cursor: 'pointer', fontSize: '1rem' }}>Catálogo</button>
+        <nav className="nav-links" style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
+          <button onClick={() => { setCategoriaSeleccionada(null); setBusqueda(''); }} style={{ background: 'none', border: 'none', color: '#fff', cursor: 'pointer', fontSize: '1rem', fontWeight: '600' }}>Inicio</button>
+          <button onClick={() => setMostrarBuscador(!mostrarBuscador)} style={{ background: 'none', border: 'none', color: '#fff', cursor: 'pointer', fontSize: '1rem', fontWeight: '600' }}>Catálogo</button>
         </nav>
         <div className="header-actions">
-          <button onClick={() => setMostrarCarritoModal(true)} className="cart-icon-btn" style={{ background: '#ff007f', color: '#fff', border: 'none', padding: '0.5rem 1rem', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>
-            🛒 <span className="cart-count">{carrito.length}</span>
+          <button onClick={() => setMostrarCarritoModal(true)} className="cart-icon-btn" style={{ background: '#ff007f', color: '#fff', border: 'none', padding: '0.6rem 1.2rem', borderRadius: '6px', cursor: 'pointer', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1rem' }}>
+            🛒 Carrito <span style={{ background: '#fff', color: '#ff007f', padding: '0.1rem 0.5rem', borderRadius: '10px', fontSize: '0.85rem' }}>{carrito.reduce((acc, i) => acc + i.cantidad, 0)}</span>
           </button>
         </div>
       </header>
 
-      <section className="hero-section" style={{ textAlign: 'center', padding: '2.5rem 1rem' }}>
-        <h1 style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>COLECCIÓN EXCLUSIVA PARADISE SHOP</h1>
-        <p style={{ color: '#666' }}>Encuentra tus diseños favoritos en poleras, polerones, gorras, cuadros y más.</p>
+      {/* Hero Section */}
+      <section className="hero-section" style={{ textAlign: 'center', padding: '3rem 1rem', backgroundColor: '#f3ece2' }}>
+        <h1 style={{ fontSize: '2.2rem', marginBottom: '0.5rem', fontWeight: '900', color: '#111' }}>COLECCIÓN EXCLUSIVA PARADISE SHOP</h1>
+        <p style={{ color: '#555', fontSize: '1.1rem' }}>Encuentra tus diseños favoritos en poleras, polerones, gorras, cuadros y más.</p>
         {mostrarBuscador && (
-          <div style={{ marginTop: '1rem' }}>
+          <div style={{ marginTop: '1.5rem' }}>
             <input 
               type="text" 
-              placeholder="Buscar producto..." 
+              placeholder="Buscar producto por nombre..." 
               value={busqueda} 
               onChange={(e) => setBusqueda(e.target.value)} 
-              style={{ padding: '0.8rem', width: '300px', borderRadius: '4px', border: '1px solid #d5cbc0' }}
+              style={{ padding: '0.9rem 1.2rem', width: '350px', borderRadius: '6px', border: '1px solid #d5cbc0', fontSize: '1rem', outline: 'none', boxShadow: '0 2px 5px rgba(0,0,0,0.05)' }}
             />
           </div>
         )}
       </section>
 
+      {/* Sección de Categorías Oficiales */}
       {!categoriaSeleccionada && busqueda === '' && (
-        <section className="categories-section" style={{ marginBottom: '3rem' }}>
-          <h2 style={{ textAlign: 'center', marginBottom: '1.5rem', fontSize: '1.4rem' }}>CATEGORÍAS OFICIALES</h2>
+        <section className="categories-section" style={{ maxWidth: '1200px', margin: '0 auto 3rem auto', padding: '0 2rem' }}>
+          <h2 style={{ textAlign: 'center', marginBottom: '2rem', fontSize: '1.6rem', fontWeight: '800', letterSpacing: '0.5px' }}>CATEGORÍAS OFICIALES</h2>
           <div className="product-grid">
-            <div onClick={() => setCategoriaSeleccionada('hombre')} className="product-card" style={{ cursor: 'pointer' }}>
-              <div className="product-image-container"><img src={imgHombre} alt="Hombre" /></div>
-              <div className="product-info" style={{ textAlign: 'center' }}>
-                <h4 className="product-title">HOMBRE / UNISEX</h4>
-              </div>
-            </div>
-            <div onClick={() => setCategoriaSeleccionada('mujer')} className="product-card" style={{ cursor: 'pointer' }}>
-              <div className="product-image-container"><img src={imgMujer} alt="Mujer" /></div>
-              <div className="product-info" style={{ textAlign: 'center' }}>
-                <h4 className="product-title">MUJER</h4>
-              </div>
-            </div>
-            <div onClick={() => setCategoriaSeleccionada('gorras')} className="product-card" style={{ cursor: 'pointer' }}>
-              <div className="product-image-container"><img src={imgGorras} alt="Gorras" /></div>
-              <div className="product-info" style={{ textAlign: 'center' }}>
-                <h4 className="product-title">GORRAS / JOCKEYS</h4>
-              </div>
-            </div>
-            <div onClick={() => setCategoriaSeleccionada('totebag')} className="product-card" style={{ cursor: 'pointer' }}>
-              <div className="product-image-container"><img src={imgTotebag} alt="Tote Bags" /></div>
-              <div className="product-info" style={{ textAlign: 'center' }}>
-                <h4 className="product-title">TOTE BAGS</h4>
-              </div>
-            </div>
-            <div onClick={() => setCategoriaSeleccionada('cuadros')} className="product-card" style={{ cursor: 'pointer' }}>
-              <div className="product-image-container"><img src={imgCuadros} alt="Cuadros" /></div>
-              <div className="product-info" style={{ textAlign: 'center' }}>
-                <h4 className="product-title">CUADROS DECORATIVOS</h4>
-              </div>
-            </div>
-            <div onClick={() => setCategoriaSeleccionada('llaveros')} className="product-card" style={{ cursor: 'pointer' }}>
-              <div className="product-image-container"><img src={imgLlaveros} alt="Llaveros" /></div>
-              <div className="product-info" style={{ textAlign: 'center' }}>
-                <h4 className="product-title">LLAVEROS</h4>
-              </div>
-            </div>
-            <div onClick={() => setCategoriaSeleccionada('mousepad')} className="product-card" style={{ cursor: 'pointer' }}>
-              <div className="product-image-container"><img src={imgMousepad} alt="Mousepads" /></div>
-              <div className="product-info" style={{ textAlign: 'center' }}>
-                <h4 className="product-title">MOUSE PADS</h4>
-              </div>
-            </div>
+            <CategoryCard img={imgHombre} title="HOMBRE / UNISEX" onClick={() => handleSeleccionarCategoria('hombre')} isActive={categoriaSeleccionada === 'hombre'} />
+            <CategoryCard img={imgMujer} title="MUJER" onClick={() => handleSeleccionarCategoria('mujer')} isActive={categoriaSeleccionada === 'mujer'} />
+            <CategoryCard img={imgGorras} title="GORRAS / JOCKEYS" onClick={() => handleSeleccionarCategoria('gorras')} isActive={categoriaSeleccionada === 'gorras'} />
+            <CategoryCard img={imgTotebag} title="TOTE BAGS" onClick={() => handleSeleccionarCategoria('totebag')} isActive={categoriaSeleccionada === 'totebag'} />
+            <CategoryCard img={imgCuadros} title="CUADROS DECORATIVOS" onClick={() => handleSeleccionarCategoria('cuadros')} isActive={categoriaSeleccionada === 'cuadros'} />
+            <CategoryCard img={imgLlaveros} title="LLAVEROS" onClick={() => handleSeleccionarCategoria('llaveros')} isActive={categoriaSeleccionada === 'llaveros'} />
+            <CategoryCard img={imgMousepad} title="MOUSE PADS" onClick={() => handleSeleccionarCategoria('mousepad')} isActive={categoriaSeleccionada === 'mousepad'} />
           </div>
         </section>
       )}
 
-      <section className="products-section" style={{ padding: '0 2rem', maxWidth: '1200px', margin: '0 auto' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-          <h2 style={{ fontSize: '1.4rem' }}>{categoriaSeleccionada ? `Categoría: ${categoriaSeleccionada.toUpperCase()}` : 'CATÁLOGO GENERAL DE PRODUCTOS'}</h2>
+      {/* Sección de Productos / Catálogo */}
+      <section ref={productosRef} className="products-section" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem 4rem 2rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', borderBottom: '2px solid #e8dfd1', paddingBottom: '1rem' }}>
+          <h2 style={{ fontSize: '1.6rem', fontWeight: '800' }}>
+            {categoriaSeleccionada ? `Categoría: ${categoriaSeleccionada.toUpperCase()}` : (busqueda ? 'Resultados de Búsqueda' : 'CATÁLOGO GENERAL DE PRODUCTOS')}
+          </h2>
           {categoriaSeleccionada && (
-            <button onClick={() => setCategoriaSeleccionada(null)} style={{ padding: '0.5rem 1rem', background: '#111', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
+            <button onClick={() => setCategoriaSeleccionada(null)} style={{ padding: '0.6rem 1.2rem', background: '#111', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: 'bold' }}>
               ← Ver Todas las Categorías
             </button>
           )}
         </div>
 
-        <div className="product-grid" style={{ padding: 0 }}>
+        <div className="product-grid">
           {resultadosBusqueda.map((prod, idx) => (
-            <div key={idx} className="product-card">
-              <div className="product-image-container" onClick={() => setProductoDetalle(prod)} style={{ cursor: 'pointer' }}>
-                <img src={prod.imagen} alt={prod.titulo} />
-              </div>
-              <div className="product-info">
-                <h4 className="product-title" onClick={() => setProductoDetalle(prod)} style={{ cursor: 'pointer' }}>{prod.titulo}</h4>
-                <p className="product-price">{prod.precio}</p>
-                <div style={{ display: 'flex', gap: '0.5rem', marginTop: 'auto' }}>
-                  <button onClick={() => setProductoDetalle(prod)} style={{ flex: 1, backgroundColor: '#333', color: '#fff', border: 'none', padding: '0.6rem', borderRadius: '4px', fontWeight: 'bold', fontSize: '0.75rem', textTransform: 'uppercase', cursor: 'pointer' }}>Ver Detalle</button>
-                  <button onClick={() => agregarAlCarrito(prod)} className="buy-button" style={{ flex: 1, marginTop: 0 }}>Comprar</button>
-                </div>
-              </div>
-            </div>
+            <ProductCard 
+              key={idx} 
+              img={prod.imagen} 
+              title={prod.titulo} 
+              price={prod.precio} 
+              onComprar={() => agregarAlCarrito(prod)} 
+              onAbrirDetalle={() => { setProductoDetalle(prod); setTallaSeleccionada(prod.tallas ? prod.tallas[0] : 'Única'); setCantidad(1); }} 
+            />
           ))}
         </div>
       </section>
 
+      {/* Modal de Detalle de Producto */}
       {productoDetalle && (
-        <div className="modal-overlay" onClick={() => setProductoDetalle(null)} style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.7)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000 }}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()} style={{ background: '#fff', padding: '2rem', borderRadius: '8px', maxWidth: '500px', width: '90%', color: '#111' }}>
-            <h3>{productoDetalle.titulo}</h3>
-            <p style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#ff007f', margin: '0.5rem 0' }}>{productoDetalle.precio}</p>
-            <p><strong>Material:</strong> {productoDetalle.material}</p>
-            <p><strong>Tejido:</strong> {productoDetalle.tejido}</p>
-            <p><strong>Estampado:</strong> {productoDetalle.estampado}</p>
-            <p><strong>Corte:</strong> {productoDetalle.corte}</p>
+        <div className="modal-overlay" onClick={() => setProductoDetalle(null)} style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.7)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000, padding: '1rem' }}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()} style={{ background: '#fff', padding: '2.5rem', borderRadius: '12px', maxWidth: '550px', width: '100%', color: '#111', boxShadow: '0 10px 25px rgba(0,0,0,0.2)' }}>
+            <h3 style={{ fontSize: '1.4rem', fontWeight: '800', marginBottom: '0.5rem' }}>{productoDetalle.titulo}</h3>
+            <p style={{ fontSize: '1.6rem', fontWeight: '900', color: '#ff007f', margin: '0.5rem 0 1.5rem 0' }}>{productoDetalle.precio}</p>
             
-            <div style={{ margin: '1rem 0' }}>
-              <strong>Tallas Disponibles:</strong>
-              <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem', flexWrap: 'wrap' }}>
-                {productoDetalle.tallas.map((t, i) => (
-                  <button 
-                    key={i} 
-                    onClick={() => setTallaSeleccionada(t)}
-                    style={{ padding: '0.5rem 1rem', border: tallaSeleccionada === t ? '2px solid #ff007f' : '1px solid #ccc', background: tallaSeleccionada === t ? '#ff007f' : '#fff', color: tallaSeleccionada === t ? '#fff' : '#111', cursor: 'pointer', borderRadius: '4px' }}
-                  >
-                    {t}
-                  </button>
-                ))}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginBottom: '1.5rem', background: '#f9f6f0', padding: '1rem', borderRadius: '8px', fontSize: '0.95rem' }}>
+              <p><strong>Material:</strong> {productoDetalle.material}</p>
+              <p><strong>Tejido:</strong> {productoDetalle.tejido}</p>
+              <p><strong>Estampado:</strong> {productoDetalle.estampado}</p>
+              <p><strong>Corte:</strong> {productoDetalle.corte}</p>
+            </div>
+            
+            {productoDetalle.tallas && (
+              <div style={{ margin: '1rem 0' }}>
+                <strong style={{ display: 'block', marginBottom: '0.5rem' }}>Seleccione Talla:</strong>
+                <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                  {productoDetalle.tallas.map((t, i) => (
+                    <button 
+                      key={i} 
+                      onClick={() => setTallaSeleccionada(t)}
+                      style={{ padding: '0.6rem 1.2rem', border: tallaSeleccionada === t ? '2px solid #ff007f' : '1px solid #ccc', background: tallaSeleccionada === t ? '#ff007f' : '#fff', color: tallaSeleccionada === t ? '#fff' : '#111', cursor: 'pointer', borderRadius: '6px', fontWeight: 'bold' }}
+                    >
+                      {t}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div style={{ margin: '1.5rem 0', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+              <strong>Cantidad:</strong>
+              <div style={{ display: 'flex', alignItems: 'center', border: '1px solid #ccc', borderRadius: '6px', overflow: 'hidden' }}>
+                <button onClick={() => setCantidad(Math.max(1, cantidad - 1))} style={{ padding: '0.5rem 1rem', background: '#f1f1f1', border: 'none', cursor: 'pointer', fontWeight: 'bold' }}>-</button>
+                <span style={{ padding: '0.5rem 1.5rem', fontWeight: 'bold' }}>{cantidad}</span>
+                <button onClick={() => setCantidad(cantidad + 1)} style={{ padding: '0.5rem 1rem', background: '#f1f1f1', border: 'none', cursor: 'pointer', fontWeight: 'bold' }}>+</button>
               </div>
             </div>
 
-            <div style={{ display: 'flex', gap: '1rem', marginTop: '1.5rem' }}>
+            <div style={{ display: 'flex', gap: '1rem', marginTop: '2rem' }}>
               <button 
-                onClick={() => { agregarAlCarrito(productoDetalle, tallaSeleccionada || productoDetalle.tallas[0]); setProductoDetalle(null); }}
-                style={{ flex: 1, background: '#ff007f', color: '#fff', border: 'none', padding: '0.8rem', fontWeight: 'bold', cursor: 'pointer', borderRadius: '4px' }}
+                onClick={() => { agregarAlCarrito(productoDetalle, tallaSeleccionada, cantidad); setProductoDetalle(null); }}
+                style={{ flex: 1, background: '#ff007f', color: '#fff', border: 'none', padding: '0.9rem', fontWeight: 'bold', cursor: 'pointer', borderRadius: '6px', fontSize: '1rem', textTransform: 'uppercase' }}
               >
                 Añadir al Carrito
               </button>
-              <button onClick={() => setProductoDetalle(null)} style={{ background: '#ccc', border: 'none', padding: '0.8rem', cursor: 'pointer', borderRadius: '4px' }}>Cerrar</button>
+              <button onClick={() => setProductoDetalle(null)} style={{ background: '#e0d8cc', color: '#333', border: 'none', padding: '0.9rem 1.5rem', cursor: 'pointer', borderRadius: '6px', fontWeight: 'bold' }}>Cerrar</button>
             </div>
           </div>
         </div>
       )}
 
+      {/* Modal del Carrito de Compras */}
       {mostrarCarritoModal && (
-        <div className="modal-overlay" style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.7)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000 }}>
-          <div className="modal-content" style={{ background: '#fff', padding: '2rem', borderRadius: '8px', maxWidth: '500px', width: '90%', color: '#111' }}>
-            <h3>🛒 Carrito de Compras</h3>
+        <div className="modal-overlay" onClick={() => setMostrarCarritoModal(false)} style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.7)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000, padding: '1rem' }}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()} style={{ background: '#fff', padding: '2.5rem', borderRadius: '12px', maxWidth: '550px', width: '100%', color: '#111', boxShadow: '0 10px 25px rgba(0,0,0,0.2)' }}>
+            <h3 style={{ fontSize: '1.4rem', fontWeight: '800', marginBottom: '1.5rem', borderBottom: '2px solid #f1f1f1', paddingBottom: '0.5rem' }}>🛒 Carrito de Compras</h3>
             {carrito.length === 0 ? (
-              <p style={{ margin: '1.5rem 0' }}>Tu carrito está vacío.</p>
+              <p style={{ margin: '2rem 0', textAlign: 'center', color: '#666', fontSize: '1.1rem' }}>Tu carrito está vacío.</p>
             ) : (
-              <div style={{ maxHeight: '250px', overflowY: 'auto', margin: '1rem 0' }}>
-                {carrito.map((item, idx) => (
-                  <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.8rem', borderBottom: '1px solid #eee', paddingBottom: '0.5rem' }}>
-                    <div>
-                      <h4 style={{ fontSize: '0.9rem' }}>{item.titulo}</h4>
-                      <small>Talla: {item.tallaSeleccionada}</small>
+              <>
+                <div style={{ maxHeight: '300px', overflowY: 'auto', margin: '1rem 0', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                  {carrito.map((item, idx) => (
+                    <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #eee', paddingBottom: '0.8rem' }}>
+                      <div style={{ flex: 1 }}>
+                        <h4 style={{ fontSize: '0.95rem', fontWeight: 'bold', margin: 0 }}>{item.titulo}</h4>
+                        <small style={{ color: '#666' }}>Talla: {item.tallaSeleccionada} | {item.precio}</small>
+                      </div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', border: '1px solid #ccc', borderRadius: '4px' }}>
+                          <button onClick={() => cambiarCantidadCarrito(idx, -1)} style={{ padding: '0.2rem 0.6rem', background: '#f1f1f1', border: 'none', cursor: 'pointer' }}>-</button>
+                          <span style={{ padding: '0.2rem 0.8rem', fontSize: '0.9rem', fontWeight: 'bold' }}>{item.cantidad}</span>
+                          <button onClick={() => cambiarCantidadCarrito(idx, 1)} style={{ padding: '0.2rem 0.6rem', background: '#f1f1f1', border: 'none', cursor: 'pointer' }}>+</button>
+                        </div>
+                        <span style={{ fontWeight: 'bold', minWidth: '80px', textAlign: 'right' }}>
+                          ${(parseInt(item.precio.replace(/[^0-9]/g, ''), 10) * item.cantidad).toLocaleString('es-CL')} CLP
+                        </span>
+                      </div>
                     </div>
-                    <span style={{ fontWeight: 'bold' }}>{item.precio}</span>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '1.5rem 0', fontSize: '1.2rem', fontWeight: '900', borderTop: '2px solid #eee', paddingTop: '1rem' }}>
+                  <span>Total estimado:</span>
+                  <span style={{ color: '#ff007f' }}>${calcularTotal().toLocaleString('es-CL')} CLP</span>
+                </div>
+              </>
             )}
-            <button onClick={() => setMostrarCarritoModal(false)} style={{ width: '100%', background: '#111', color: '#fff', border: 'none', padding: '0.8rem', fontWeight: 'bold', cursor: 'pointer', borderRadius: '4px', marginTop: '1rem' }}>
-              Seguir Comprando
-            </button>
+            <div style={{ display: 'flex', gap: '1rem', marginTop: '1.5rem' }}>
+              <button onClick={() => setMostrarCarritoModal(false)} style={{ flex: 1, background: '#111', color: '#fff', border: 'none', padding: '0.9rem', fontWeight: 'bold', cursor: 'pointer', borderRadius: '6px', textTransform: 'uppercase' }}>
+                Seguir Comprando
+              </button>
+            </div>
           </div>
         </div>
       )}

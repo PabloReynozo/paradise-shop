@@ -1,14 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import './App.css';
-
-// Importación del SDK de Mercado Pago para React
-import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
-
-// Inicializar Mercado Pago con tu Public Key pública desde las variables de entorno de Vite
-// Asegúrate de tener VITE_MP_PUBLIC_KEY configurada en tu archivo .env local y en Vercel
-initMercadoPago(import.meta.env.VITE_MP_PUBLIC_KEY || "APP_USR-3ffed777-e845-4659-9c06-e10c93d4f15c", {
-  locale: 'es-CL'
-});
 
 // Importación de imágenes de portada para las categorías
 import imgHombre from './images/hombre.png';
@@ -120,162 +111,331 @@ const baseDeDatosProductos = {
   ],
   mousepad: [
     { id: 'mp1', titulo: "Mouse Pad Gamer Batman vs Superman", precio: 27990, precioFormateado: "$27.990 CLP", imagen: "/mousepad/Mouse%20Pad%20Gamer%20Batman%20vs%20Superman.png", material: "Superficie de Microfibra con Base Antideslizante de Goma", tejido: "Soft Micro-Weave Speed", tallas: ["XL Gamer"], estampado: "Sublimación Full HD Lavable", corte: "Bordes Cosidos Reforzados Anti-Desgaste" },
-    { id: 'mp2', titulo: "Mouse Pad Gamer Breaking Bad", precio: 27990, precioFormateado: "$27.990 CLP", imagen: "/mousepad/Mouse%20Pad%20Gamer%20Breaking%20Bad.png", material: "Superficie de Microfibra con Base Antideslizante de Goma", tejido: "Soft Micro-Weave Speed", tallas: ["XL Gamer"], estampado: "Sublimación Full HD Lavable", corte: "Bordes Cosidos Reforzados Anti-Desgaste" }
+    { id: 'mp2', titulo: "Mouse Pad Gamer Breaking Bad", precio: 27990, precioFormateado: "$27.990 CLP", imagen: "/mousepad/Mouse%20Pad%20Gamer%20Breaking%20Bad.png", material: "Superficie de Microfibra con Base Antideslizante de Goma", tejido: "Soft Micro-Weave Speed", tallas: ["XL Gamer"], estampado: "Sublimación Full HD Lavable", corte: "Bordes Cosidos Reforzados Anti-Desgaste" },
+    { id: 'mp3', titulo: "Mouse Pad Gamer Peaky Blinders", precio: 27990, precioFormateado: "$27.990 CLP", imagen: "/mousepad/Mouse%20Pad%20Gamer%20Peaky%20Blindres.png", material: "Superficie de Microfibra con Base Antideslizante de Goma", tejido: "Soft Micro-Weave Speed", tallas: ["XL Gamer"], estampado: "Sublimación Full HD Lavable", corte: "Bordes Cosidos Reforzados Anti-Desgaste" }
   ]
 };
 
-export default function App() {
+function App() {
+  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null);
+  const [busqueda, setBusqueda] = useState('');
+  const [mostrarBuscador, setMostrarBuscador] = useState(false);
+  const [mostrarDimensionesModal, setMostrarDimensionesModal] = useState(false);
   const [carrito, setCarrito] = useState([]);
-  const [modalAbierto, setModalAbierto] = useState(false);
-  const [preferenceId, setPreferenceId] = useState(null);
-  const [cargandoPreferencia, setCargandoPreferencia] = useState(false);
-  const [categoriaActiva, setCategoriaActiva] = useState('hombre');
+  const [mostrarCarritoModal, setMostrarCarritoModal] = useState(false);
+  const [productoDetalle, setProductoDetalle] = useState(null);
+  const [tallaSeleccionada, setTallaSeleccionada] = useState('');
 
-  // Función para agregar un producto al carrito
-  const agregarAlCarro = (producto, tallaSeleccionada) => {
-    const itemExistente = carrito.find(item => item.id === producto.id && item.talla === tallaSeleccionada);
-    if (itemExistente) {
-      setCarrito(carrito.map(item => 
-        item.id === producto.id && item.talla === tallaSeleccionada 
-          ? { ...item, cantidad: item.cantidad + 1 } 
-          : item
-      ));
-    } else {
-      setCarrito([...carrito, { ...producto, talla: tallaSeleccionada || producto.tallas[0], cantidad: 1 }]);
-    }
-    setModalAbierto(true);
+  const topRef = useRef(null);
+  const productosRef = useRef(null);
+  const categoriasRef = useRef(null);
+
+  const irAInicio = () => {
+    setCategoriaSeleccionada(null);
+    setBusqueda('');
+    if (topRef.current) topRef.current.scrollIntoView({ behavior: 'smooth' });
   };
 
-  // Calcular subtotales y total con despacho fijo de $4.000 CLP
-  const subtotalProductos = carrito.reduce((acc, item) => acc + (item.precio * item.cantidad), 0);
-  const costoDespacho = carrito.length > 0 ? 4000 : 0;
-  const totalAPagar = subtotalProductos + costoDespacho;
-
-  // Función que solicita el preferenceId al backend en Vercel
-  const generarPreferenciaMercadoPago = async () => {
-    if (carrito.length === 0) return;
-    setCargandoPreferencia(true);
-    try {
-      const response = await fetch('/api/create_preference', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          items: carrito.map(item => ({
-            id: item.id,
-            title: item.titulo,
-            unit_price: item.precio,
-            quantity: item.cantidad,
-            currency_id: 'CLP'
-          })),
-          shipment_cost: costoDespacho
-        }),
-      });
-
-      const data = await response.json();
-      if (data.id) {
-        setPreferenceId(data.id);
-      } else {
-        console.error("Error al generar la preferencia:", data);
-      }
-    } catch (error) {
-      console.error("Error de conexión con la API de Vercel:", error);
-    } finally {
-      setCargandoPreferencia(false);
+  const irACategorias = () => {
+    setCategoriaSeleccionada(null);
+    if (categoriasRef.current) {
+      categoriasRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
-  // Cada vez que se abra el modal o cambie el carrito, generamos la preferencia automáticamente
-  useEffect(() => {
-    if (modalAbierto && carrito.length > 0) {
-      generarPreferenciaMercadoPago();
-    }
-  }, [modalAbierto, carrito]);
+  const seleccionarCategoria = (cat) => {
+    setCategoriaSeleccionada(cat);
+    setTimeout(() => {
+      if (productosRef.current) productosRef.current.scrollIntoView({ behavior: 'smooth' });
+    }, 150);
+  };
+
+  const agregarAlCarrito = (producto, talla = null) => {
+    const tallaElegida = talla || (producto.tallas && producto.tallas[0]) || 'Única';
+    setCarrito([...carrito, { ...producto, tallaSeleccionada: tallaElegida }]);
+    setProductoDetalle(null);
+    setMostrarCarritoModal(true);
+  };
+
+  const eliminarDelCarrito = (index) => {
+    const nuevoCarrito = carrito.filter((_, i) => i !== index);
+    setCarrito(nuevoCarrito);
+  };
+
+  const totalCarrito = carrito.reduce((acc, item) => acc + item.precio, 0);
+
+  const productosFiltrados = categoriaSeleccionada 
+    ? baseDeDatosProductos[categoriaSeleccionada] 
+    : Object.values(baseDeDatosProductos).flat();
+
+  const resultadosBusqueda = busqueda.trim() === '' 
+    ? productosFiltrados 
+    : productosFiltrados.filter(p => p.titulo.toLowerCase().includes(busqueda.toLowerCase()));
 
   return (
-    <div className="app-container">
-      <header className="site-header">
-        <h1>Paradise Shop Cl</h1>
-        <p>Tienda Oficial de Merchandising y Estampados</p>
-        <button className="btn-carrito" onClick={() => setModalAbierto(true)}>
-          🛒 Carrito ({carrito.reduce((acc, item) => acc + item.cantidad, 0)})
-        </button>
+    <div className="app-container" ref={topRef}>
+      <header className="app-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.5rem 2rem', backgroundColor: '#111', color: '#fff' }}>
+        <div className="logo" onClick={irAInicio} style={{ cursor: 'pointer', fontWeight: 'bold', fontSize: '1.2rem' }}>
+          TIENDA PARADISE <span style={{ color: '#ff007f' }}>.CL</span>
+        </div>
+        
+        <nav className="nav-links" style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
+          <button onClick={irAInicio} style={{ background: 'none', border: 'none', color: '#fff', cursor: 'pointer', fontSize: '1rem' }}>Inicio</button>
+          <button onClick={irACategorias} style={{ background: 'none', border: 'none', color: '#fff', cursor: 'pointer', fontSize: '1rem' }}>Categorías</button>
+          <button onClick={() => { setCategoriaSeleccionada(null); if(productosRef.current) productosRef.current.scrollIntoView({behavior: 'smooth'}); }} style={{ background: 'none', border: 'none', color: '#fff', cursor: 'pointer', fontSize: '1rem' }}>Catálogo</button>
+          <button onClick={() => setMostrarDimensionesModal(true)} style={{ background: 'none', border: 'none', color: '#fff', cursor: 'pointer', fontSize: '1rem' }}>Tabla de dimensiones</button>
+        </nav>
+
+        <div className="header-actions" style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+          <button onClick={() => setMostrarBuscador(!mostrarBuscador)} style={{ background: 'none', border: 'none', color: '#fff', cursor: 'pointer', fontSize: '1.2rem' }}>
+            🔍
+          </button>
+          <button onClick={() => setMostrarCarritoModal(true)} className="cart-icon-btn" style={{ background: '#ff007f', color: '#fff', border: 'none', padding: '0.5rem 1rem', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>
+            🛒 <span className="cart-count">{carrito.length}</span>
+          </button>
+        </div>
       </header>
 
-      {/* Selector de Categorías */}
-      <nav className="categorias-nav">
-        {Object.keys(baseDeDatosProductos).map(cat => (
-          <button 
-            key={cat} 
-            className={`btn-categoria ${categoriaActiva === cat ? 'activa' : ''}`}
-            onClick={() => setCategoriaActiva(cat)}
-          >
-            {cat.toUpperCase()}
-          </button>
-        ))}
-      </nav>
+      <section className="hero-section" style={{ textAlign: 'center', padding: '2.5rem 1rem' }}>
+        <h2>COLECCIÓN EXCLUSIVA TIENDA PARAÍSO</h2>
+        <p>Encuentra tus diseños favoritos en poleras, polerones, gorras, cuadros y más.</p>
+        {mostrarBuscador && (
+          <div style={{ marginTop: '1rem' }}>
+            <input 
+              type="text" 
+              placeholder="Buscar producto..." 
+              value={busqueda} 
+              onChange={(e) => setBusqueda(e.target.value)} 
+              style={{ padding: '0.8rem', width: '300px', borderRadius: '4px', border: '1px solid #d5cbc0' }}
+            />
+          </div>
+        )}
+      </section>
 
-      {/* Grilla de Productos */}
-      <main className="productos-grid">
-        {baseDeDatosProductos[categoriaActiva].map(producto => (
-          <div key={producto.id} className="producto-card">
-            <img src={producto.imagen} alt={producto.titulo} className="producto-img" />
-            <h3>{producto.titulo}</h3>
-            <p className="precio">{producto.precioFormateado}</p>
-            <button 
-              className="btn-comprar"
-              onClick={() => agregarAlCarro(producto, producto.tallas[0])}
-            >
-              Comprar / Agregar
+      {!categoriaSeleccionada && busqueda === '' && (
+        <section className="categories-section" ref={categoriasRef} style={{ marginBottom: '3rem' }}>
+          <h2 style={{ textAlign: 'center', marginBottom: '1.5rem' }}>CATEGORÍAS OFICIALES</h2>
+          <div className="categories-grid">
+            <div onClick={() => seleccionarCategoria('hombre')} className="category-card" style={{ cursor: 'pointer' }}>
+              <div className="category-image-container"><img src={imgHombre} alt="Hombre" /></div>
+              <div className="category-title">HOMBRE / UNISEX</div>
+            </div>
+            <div onClick={() => seleccionarCategoria('mujer')} className="category-card" style={{ cursor: 'pointer' }}>
+              <div className="category-image-container"><img src={imgMujer} alt="Mujer" /></div>
+              <div className="category-title">MUJER</div>
+            </div>
+            <div onClick={() => seleccionarCategoria('gorras')} className="category-card" style={{ cursor: 'pointer' }}>
+              <div className="category-image-container"><img src={imgGorras} alt="Gorras" /></div>
+              <div className="category-title">GORRAS / JOCKEYS</div>
+            </div>
+            <div onClick={() => seleccionarCategoria('totebag')} className="category-card" style={{ cursor: 'pointer' }}>
+              <div className="category-image-container"><img src={imgTotebag} alt="Tote Bags" /></div>
+              <div className="category-title">TOTE BAGS</div>
+            </div>
+            <div onClick={() => seleccionarCategoria('cuadros')} className="category-card" style={{ cursor: 'pointer' }}>
+              <div className="category-image-container"><img src={imgCuadros} alt="Cuadros" /></div>
+              <div className="category-title">CUADROS DECORATIVOS</div>
+            </div>
+            <div onClick={() => seleccionarCategoria('llaveros')} className="category-card" style={{ cursor: 'pointer' }}>
+              <div className="category-image-container"><img src={imgLlaveros} alt="Llaveros" /></div>
+              <div className="category-title">LLAVEROS</div>
+            </div>
+            <div onClick={() => seleccionarCategoria('mousepad')} className="category-card" style={{ cursor: 'pointer' }}>
+              <div className="category-image-container"><img src={imgMousepad} alt="Mousepads" /></div>
+              <div className="category-title">MOUSE PADS</div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      <section ref={productosRef} className="products-section" style={{ padding: '0 2rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+          <h2>{categoriaSeleccionada ? `Categoría: ${categoriaSeleccionada.toUpperCase()}` : 'CATÁLOGO GENERAL DE PRODUCTOS'}</h2>
+          {categoriaSeleccionada && (
+            <button onClick={() => setCategoriaSeleccionada(null)} style={{ padding: '0.5rem 1rem', background: '#111', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
+              ← Ver Todas las Categorías
+            </button>
+          )}
+        </div>
+
+        <div className="product-grid">
+          {resultadosBusqueda.map((prod, idx) => (
+            <div key={idx} className="product-card">
+              <div className="product-image-container" onClick={() => setProductoDetalle(prod)} style={{ cursor: 'pointer' }}>
+                <img src={prod.imagen} alt={prod.titulo} />
+              </div>
+              <div className="product-info">
+                <h4 className="product-title" onClick={() => setProductoDetalle(prod)} style={{ cursor: 'pointer' }}>{prod.titulo}</h4>
+                <p className="product-price">{prod.precioFormateado}</p>
+                <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
+                  <button onClick={() => setProductoDetalle(prod)} style={{ flex: 1, backgroundColor: '#111', color: '#fff', border: 'none', padding: '0.6rem', borderRadius: '4px', fontWeight: 'bold', fontSize: '0.75rem', textTransform: 'uppercase', cursor: 'pointer' }}>Ver Detalle</button>
+                  <button onClick={() => agregarAlCarrito(prod)} className="buy-button" style={{ flex: 1, textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Comprar</button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Modal Tabla de Dimensiones */}
+      {mostrarDimensionesModal && (
+        <div className="modal-overlay" onClick={() => setMostrarDimensionesModal(false)} style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.7)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000, padding: '1rem' }}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()} style={{ background: '#fff', padding: '2rem', borderRadius: '8px', maxWidth: '650px', width: '100%', color: '#111', maxHeight: '85vh', overflowY: 'auto' }}>
+            <h3 style={{ marginBottom: '1.2rem', borderBottom: '2px solid #ff007f', paddingBottom: '0.5rem', fontSize: '1.3rem' }}>📏 Tabla de Dimensiones</h3>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem', fontSize: '0.95rem', lineHeight: '1.6' }}>
+              <div>
+                <h4 style={{ color: '#ff007f', marginBottom: '0.4rem', fontSize: '1.05rem' }}>Polera Polo Cuello Redondo (Hombres)</h4>
+                <p>• S: 46 cm (ancho) x 68 cm (largo)</p>
+                <p>• M: 51 cm (ancho) x 73 cm (largo)</p>
+                <p>• L: 56 cm (ancho) x 75 cm (largo)</p>
+                <p>• XL: 61 cm (ancho) x 76 cm (largo)</p>
+                <p>• 2XL: 66 cm (ancho) x 79 cm (largo)</p>
+                <p>• 3XL: 71 cm (ancho) x 83 cm (largo)</p>
+                <p>• 4XL: 75 cm (ancho) x 86 cm (largo)</p>
+                <p>• 5XL: 80 cm (ancho) x 89 cm (largo)</p>
+              </div>
+
+              <div>
+                <h4 style={{ color: '#ff007f', marginBottom: '0.4rem', fontSize: '1.05rem' }}>Polera Premium Cuello Redondo (Hombres)</h4>
+                <p>• S: 45 cm (ancho) x 69 cm (largo)</p>
+                <p>• M: 49 cm (ancho) x 73 cm (largo)</p>
+                <p>• L: 54 cm (ancho) x 76 cm (largo)</p>
+                <p>• XL: 59 cm (ancho) x 77 cm (largo)</p>
+                <p>• 2XL: 64 cm (ancho) x 80 cm (largo)</p>
+                <p>• 3XL: 71 cm (ancho) x 83 cm (largo)</p>
+              </div>
+
+              <div>
+                <h4 style={{ color: '#ff007f', marginBottom: '0.4rem', fontSize: '1.05rem' }}>Polera Oversize (Hombres)</h4>
+                <p>• S: 59 cm (ancho) x 71.5 cm (largo)</p>
+                <p>• M: 64 cm (ancho) x 74 cm (largo)</p>
+                <p>• L: 69 cm (ancho) x 76.5 cm (largo)</p>
+                <p>• XL: 74 cm (ancho) x 79 cm (largo)</p>
+                <p>• 2XL: 79 cm (ancho) x 81.5 cm (largo)</p>
+              </div>
+
+              <div>
+                <h4 style={{ color: '#ff007f', marginBottom: '0.4rem', fontSize: '1.05rem' }}>Polera Mujer Cuello Redondo</h4>
+                <p>• XS: 38 cm (ancho) x 59 cm (largo)</p>
+                <p>• S: 43 cm (ancho) x 64.5 cm (largo)</p>
+                <p>• M: 48.5 cm (ancho) x 66 cm (largo)</p>
+                <p>• L: 53.5 cm (ancho) x 69 cm (largo)</p>
+                <p>• XL: 58.5 cm (ancho) x 71.5 cm (largo)</p>
+                <p>• 2XL: 60.5 cm (ancho) x 73.5 cm (largo)</p>
+              </div>
+
+              <div>
+                <h4 style={{ color: '#ff007f', marginBottom: '0.4rem', fontSize: '1.05rem' }}>Polerón Canguro Premium (Hombres)</h4>
+                <p>• S: 46 cm (ancho) x 70 cm (largo)</p>
+                <p>• M: 51 cm (ancho) x 73 cm (largo)</p>
+                <p>• L: 56 cm (ancho) x 76 cm (largo)</p>
+                <p>• XL: 61 cm (ancho) x 78 cm (largo)</p>
+                <p>• 2XL: 66 cm (ancho) x 81 cm (largo)</p>
+                <p>• 3XL: 68 cm (ancho) x 83 cm (largo)</p>
+              </div>
+            </div>
+
+            <button onClick={() => setMostrarDimensionesModal(false)} style={{ width: '100%', background: '#111', color: '#fff', border: 'none', padding: '0.9rem', fontWeight: 'bold', cursor: 'pointer', borderRadius: '4px', marginTop: '1.5rem', textTransform: 'uppercase' }}>
+              Cerrar Tabla
             </button>
           </div>
-        ))}
-      </main>
+        </div>
+      )}
 
-      {/* Modal del Carrito y Checkout */}
-      {modalAbierto && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <button className="btn-cerrar" onClick={() => setModalAbierto(false)}>✕</button>
-            <h2>🛒 Tu Carrito de Compras</h2>
+      {/* Modal Detalle de Producto */}
+      {productoDetalle && (
+        <div className="modal-overlay" onClick={() => setProductoDetalle(null)} style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.7)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000 }}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()} style={{ background: '#fff', padding: '2rem', borderRadius: '8px', maxWidth: '500px', width: '90%', color: '#111' }}>
+            <h3>{productoDetalle.titulo}</h3>
+            <p style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#ff007f' }}>{productoDetalle.precioFormateado}</p>
+            <p><strong>Material:</strong> {productoDetalle.material}</p>
+            <p><strong>Tejido:</strong> {productoDetalle.tejido}</p>
+            <p><strong>Estampado:</strong> {productoDetalle.estampado}</p>
+            <p><strong>Corte:</strong> {productoDetalle.corte}</p>
+            
+            <div style={{ margin: '1rem 0' }}>
+              <strong>Tallas Disponibles:</strong>
+              <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem', flexWrap: 'wrap' }}>
+                {productoDetalle.tallas.map((t, i) => (
+                  <button 
+                    key={i} 
+                    onClick={() => setTallaSeleccionada(t)}
+                    style={{ padding: '0.5rem 1rem', border: (tallaSeleccionada === t || (!tallaSeleccionada && i === 0)) ? '2px solid #ff007f' : '1px solid #ccc', background: (tallaSeleccionada === t || (!tallaSeleccionada && i === 0)) ? '#ff007f' : '#fff', color: (tallaSeleccionada === t || (!tallaSeleccionada && i === 0)) ? '#fff' : '#111', cursor: 'pointer', borderRadius: '4px' }}
+                  >
+                    {t}
+                  </button>
+                ))}
+              </div>
+            </div>
 
+            <div style={{ display: 'flex', gap: '1rem', marginTop: '1.5rem' }}>
+              <button 
+                onClick={() => agregarAlCarrito(productoDetalle, tallaSeleccionada || productoDetalle.tallas[0])}
+                style={{ flex: 1, background: '#ff007f', color: '#fff', border: 'none', padding: '0.8rem', fontWeight: 'bold', cursor: 'pointer', borderRadius: '4px', textTransform: 'uppercase' }}
+              >
+                Agregar al Carrito
+              </button>
+              <button onClick={() => setProductoDetalle(null)} style={{ background: '#ccc', border: 'none', padding: '0.8rem', cursor: 'pointer', borderRadius: '4px' }}>Cerrar</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal Carrito de Compras */}
+      {mostrarCarritoModal && (
+        <div className="modal-overlay" onClick={() => setMostrarCarritoModal(false)} style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.7)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000 }}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()} style={{ background: '#fff', padding: '2rem', borderRadius: '8px', maxWidth: '550px', width: '90%', color: '#111' }}>
+            <h3 style={{ borderBottom: '2px solid #ff007f', paddingBottom: '0.5rem', marginBottom: '1rem' }}>🛒 Tu Carrito de Compras</h3>
+            
             {carrito.length === 0 ? (
-              <p>Tu carrito está vacío.</p>
+              <p style={{ margin: '1.5rem 0', textAlign: 'center' }}>Tu carrito está vacío. ¡Agrega tus diseños favoritos!</p>
             ) : (
               <>
-                <div className="lista-items">
-                  {carrito.map((item, index) => (
-                    <div key={index} className="item-carrito">
-                      <span>{item.titulo} ({item.talla}) x {item.cantidad}</span>
-                      <span>{(item.precio * item.cantidad).toLocaleString('es-CL')} CLP</span>
+                <div style={{ maxHeight: '250px', overflowY: 'auto', margin: '1rem 0', display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
+                  {carrito.map((item, idx) => (
+                    <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #eee', paddingBottom: '0.5rem' }}>
+                      <div style={{ display: 'flex', gap: '0.8rem', alignItems: 'center' }}>
+                        <img src={item.imagen} alt={item.titulo} style={{ width: '40px', height: '40px', objectFit: 'contain', backgroundColor: '#111', borderRadius: '4px', padding: '2px' }} />
+                        <div>
+                          <h4 style={{ fontSize: '0.85rem' }}>{item.titulo}</h4>
+                          <small style={{ color: '#666' }}>Talla: {item.tallaSeleccionada}</small>
+                        </div>
+                      </div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                        <span style={{ fontWeight: 'bold', color: '#ff007f' }}>{item.precioFormateado}</span>
+                        <button onClick={() => eliminarDelCarrito(idx)} style={{ background: 'none', border: 'none', color: '#ff4d4d', cursor: 'pointer', fontSize: '1rem', fontWeight: 'bold' }} title="Eliminar">✕</button>
+                      </div>
                     </div>
                   ))}
                 </div>
 
-                <div className="resumen-totales">
-                  <p>Subtotal Productos: <span>${subtotalProductos.toLocaleString('es-CL')} CLP</span></p>
-                  <p>Despacho / Envíos: <span>${costoDespacho.toLocaleString('es-CL')} CLP</span></p>
-                  <h3>Total a Pagar: <span>${totalAPagar.toLocaleString('es-CL')} CLP</span></h3>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '1.5rem 0', borderTop: '2px solid #111', paddingTop: '1rem', fontSize: '1.1rem', fontWeight: 'bold' }}>
+                  <span>Total Acumulado:</span>
+                  <span style={{ color: '#ff007f', fontSize: '1.3rem' }}>${totalCarrito.toLocaleString('es-CL')} CLP</span>
                 </div>
 
-                {/* Botón oficial de Mercado Pago Wallet */}
-                <div className="checkout-container">
-                  {cargandoPreferencia ? (
-                    <p>Generando pasarela de pago segura...</p>
-                  ) : preferenceId ? (
-                    <Wallet initialization={{ preferenceId: preferenceId }} customization={{ texts: { valueProp: 'smart_option' } }} />
-                  ) : (
-                    <button className="btn-mp-error" onClick={generarPreferenciaMercadoPago}>
-                      Reintentar conexión de pago
-                    </button>
-                  )}
+                <div style={{ display: 'flex', gap: '1rem' }}>
+                  <a 
+                    href="https://www.mercadopago.cl" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    style={{ flex: 1, background: '#ff007f', color: '#fff', border: 'none', padding: '0.9rem', fontWeight: 'bold', cursor: 'pointer', borderRadius: '4px', textDecoration: 'none', textAlign: 'center', textTransform: 'uppercase' }}
+                  >
+                    Pagar Total en Mercado Pago
+                  </a>
                 </div>
               </>
             )}
+
+            <button onClick={() => setMostrarCarritoModal(false)} style={{ width: '100%', background: '#111', color: '#fff', border: 'none', padding: '0.8rem', fontWeight: 'bold', cursor: 'pointer', borderRadius: '4px', marginTop: '1rem', textTransform: 'uppercase' }}>
+              Seguir Comprando
+            </button>
           </div>
         </div>
       )}
     </div>
   );
 }
+
+export default App;

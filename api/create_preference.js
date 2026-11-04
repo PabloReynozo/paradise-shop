@@ -1,5 +1,9 @@
 
 export default async function handler(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
   try {
     const { items, envio, cliente } = req.body || {};
@@ -10,9 +14,9 @@ export default async function handler(req, res) {
 
     const mpItems = [
       ...(items || []).map(i => ({
-        title: (i.nombre || i.titulo || 'Polera Paradise Shop').toString().substring(0, 100),
-        quantity: 1,
-        unit_price: Number(i.precio) || 23990,
+        title: (i.nombre || i.titulo || i.title || 'Polera Paradise Shop').toString().substring(0, 100),
+        quantity: Number(i.quantity) || 1,
+        unit_price: Number(String(i.unit_price ?? i.precio ?? i.precioNum ?? '23990').replace(/[^0-9]/g, '')) || 23990,
         currency_id: 'CLP'
       })),
       {
@@ -49,7 +53,7 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: 'MP API Error: ' + JSON.stringify(data) });
     }
 
-    return res.status(200).json({ init_point: data.init_point, id: data.id });
+    return res.status(200).json({ init_point: data.init_point, id: data.id, preferenceId: data.id });
   } catch (e) {
     console.error('Handler Error', e);
     return res.status(500).json({ error: e.message });

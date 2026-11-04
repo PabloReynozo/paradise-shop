@@ -122,7 +122,7 @@ const baseDeDatosProductos = {
 
 const CategoryCard = ({ img, title, onClick, isActive }) => (
   <div onClick={onClick} style={{ cursor: 'pointer', border: isActive ? '2.5px solid #ff007f' : '1px solid #e8e0d6', borderRadius: '16px', overflow: 'hidden', background: '#fff', position: 'relative', height: '200px', boxShadow: isActive ? '0 8px 24px rgba(255,0,127,0.15)' : '0 6px 20px rgba(0,0,0,0.06)', transition: 'all 0.25s ease', transform: isActive ? 'translateY(-2px)' : 'none' }}>
-    <div style={{ height: '135px', background: '#faf7f2', display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '1rem' }}><img src={img} alt={title} style={{ maxWidth: '85%', maxHeight: '85%', objectFit: 'contain' }} /></div>
+    <div style={{ height: '135px', background: '#faf7f2', display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '1rem' }}><img src={img} alt={title} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} /></div>
     <div style={{ position: 'absolute', bottom: '0.7rem', left: '0.7rem', right: '0.7rem', backgroundColor: isActive ? '#ff007f' : '#111', color: '#fff', padding: '0.6rem', textAlign: 'center', textTransform: 'uppercase', fontWeight: '700', fontSize: '0.82rem', borderRadius: '8px', letterSpacing: '0.5px' }}>{title}</div>
   </div>
 );

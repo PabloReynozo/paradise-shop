@@ -1,6 +1,6 @@
 const baseDeDatosProductos = {
   hombre: [
-    { titulo: "Polera Oversize 300 Blanca", precio: "$23.990 CLP", imagen: "/hombre/Polera%20Oversize%20300%20Blanca.png", material: "80% Algodon y 20% Poliester", tejido: "Interlock 280 grs", tallas: ["S","M","L","XL","2XL"], estampado: "Impresion Digital DTF Textil HD", corte: "Oversize Fit Streetwear" },
+    { titulo: "Polera Oversize 300 Blanca", precio: "$23.990 CLP", imagen: "/hombre/Polera%20Oversize%20300%20Blanca.png", material: "80% Algodon y 20% Poliester", tejido: "Interlock 280 grs", tallas: ["S","M","L","XL","2XL"], estampado: "Impresion Digital DTF Textil HD", corte: "Oversize Fit Streetwear", destacadoNavidad: true },
     { titulo: "Polera Oversize Aguila Blanca", precio: "$23.990 CLP", imagen: "/hombre/Polera%20Oversize%20aguila%20Blanca.png", material: "80% Algodon y 20% Poliester", tejido: "Interlock 280 grs", tallas: ["S","M","L","XL","2XL"], estampado: "DTF HD", corte: "Oversize" },
     { titulo: "Polera Oversize Blanca Hombre", precio: "$23.990 CLP", imagen: "/hombre/Polera%20Oversize%20Blanca%20Hombre.png", material: "80% Algodon", tejido: "Interlock 280 grs", tallas: ["S","M","L","XL","2XL"], estampado: "DTF HD", corte: "Oversize" },
     { titulo: "Polera Oversize Breaking Bad Blanca", precio: "$23.990 CLP", imagen: "/hombre/Polera%20Oversize%20Breaking%20Bad%20Blanca.png", material: "80% Algodon", tejido: "Interlock 280 grs", tallas: ["S","M","L","XL","2XL"], estampado: "DTF HD", corte: "Oversize" },
@@ -28,10 +28,21 @@ const baseDeDatosProductos = {
     { titulo: "Polera Premium Piccolo Negra", precio: "$26.990 CLP", imagen: "/hombre/Polera%20premium%20cuello%20redondo%20Piccolo%20Negra.png", material: "100% Algodon Peinado", tejido: "Jersey 180 grs", tallas: ["S","M","L","XL","2XL","3XL"], estampado: "DTF HD", corte: "Premium" },
     { titulo: "Polera Premium Star Wars Negra", precio: "$26.990 CLP", imagen: "/hombre/Polera%20premium%20cuello%20redondo%20star%20wars%20negra.png", material: "100% Algodon Peinado", tejido: "Jersey 180 grs", tallas: ["S","M","L","XL","2XL","3XL"], estampado: "DTF HD", corte: "Premium" },
     { titulo: "Polera Premium Super Boo Negra", precio: "$26.990 CLP", imagen: "/hombre/Polera%20premium%20cuello%20redondo%20Super%20boo%20negra.png", material: "100% Algodon Peinado", tejido: "Jersey 180 grs", tallas: ["S","M","L","XL","2XL","3XL"], estampado: "DTF HD", corte: "Premium" },
-    { titulo: "Poleron Canguro Premium Frase", precio: "$42.990 CLP", imagen: "/hombre/Poleron-canguro-premium-frase.png", material: "90% Algodon 10% Poliester", tejido: "Franela 340 grs", tallas: ["S","M","L","XL","2XL","3XL"], estampado: "DTF HD", corte: "Hoodie Premium" }
+    { titulo: "Poleron Canguro Premium Frase", precio: "$42.990 CLP", imagen: "/hombre/Poleron-canguro-premium-frase.png", material: "90% Algodon 10% Poliester", tejido: "Franela 340 grs", tallas: ["S","M","L","XL","2XL","3XL"], estampado: "DTF HD", corte: "Hoodie Premium" },
+    { titulo: "Ace Playing Color", categoria: "hombre", precio: "$19.990 CLP", imagen: "/linea-clasica/Hombres/ace_playing_color.png", material: "Algodón", tejido: "Algodón 280g", tallas: ["S","M","L","XL","2XL"], estampado: "DTF HD", corte: "Oversize", descripcion: "Polera oversize de algodón 280g.", linea: "clasica", proveedor: "dp", destacadoNavidad: true },
+    { titulo: "Ame Sombre", categoria: "hombre", precio: "$19.990 CLP", imagen: "/linea-clasica/Hombres/ame_sombre_cutout.png", material: "Algodón", tejido: "Algodón 280g", tallas: ["S","M","L","XL","2XL"], estampado: "DTF HD", corte: "Oversize", descripcion: "Polera oversize de algodón 280g.", linea: "clasica", proveedor: "dp" },
+    { titulo: "As Picas Luck", categoria: "hombre", precio: "$19.990 CLP", imagen: "/linea-clasica/Hombres/as_picas_luck_cutout.png", material: "Algodón", tejido: "Algodón 280g", tallas: ["S","M","L","XL","2XL"], estampado: "DTF HD", corte: "Oversize", descripcion: "Polera oversize de algodón 280g.", linea: "clasica", proveedor: "dp" },
+    { titulo: "Divine Angel", categoria: "hombre", precio: "$19.990 CLP", imagen: "/linea-clasica/Hombres/divine_angel_cutout.png", material: "Algodón", tejido: "Algodón 280g", tallas: ["S","M","L","XL","2XL"], estampado: "DTF HD", corte: "Oversize", descripcion: "Polera oversize de algodón 280g.", linea: "clasica", proveedor: "dp" },
+    { titulo: "Dreams Wake Up", categoria: "hombre", precio: "$19.990 CLP", imagen: "/linea-clasica/Hombres/dreams_wake_up_cutout.png", material: "Algodón", tejido: "Algodón 280g", tallas: ["S","M","L","XL","2XL"], estampado: "DTF HD", corte: "Oversize", descripcion: "Polera oversize de algodón 280g.", linea: "clasica", proveedor: "dp" },
+    { titulo: "Gamer", categoria: "hombre", precio: "$19.990 CLP", imagen: "/linea-clasica/Hombres/gamer_cutout.png", material: "Algodón", tejido: "Algodón 280g", tallas: ["S","M","L","XL","2XL"], estampado: "DTF HD", corte: "Oversize", descripcion: "Polera oversize de algodón 280g.", linea: "clasica", proveedor: "dp" },
+    { titulo: "No Limits", categoria: "hombre", precio: "$19.990 CLP", imagen: "/linea-clasica/Hombres/no_limits_cutout.png", material: "Algodón", tejido: "Algodón 280g", tallas: ["S","M","L","XL","2XL"], estampado: "DTF HD", corte: "Oversize", descripcion: "Polera oversize de algodón 280g.", linea: "clasica", proveedor: "dp" },
+    { titulo: "Peace Paloma", categoria: "hombre", precio: "$19.990 CLP", imagen: "/linea-clasica/Hombres/peace_paloma_cutout.png", material: "Algodón", tejido: "Algodón 280g", tallas: ["S","M","L","XL","2XL"], estampado: "DTF HD", corte: "Oversize", descripcion: "Polera oversize de algodón 280g.", linea: "clasica", proveedor: "dp" },
+    { titulo: "Positive Explore", categoria: "hombre", precio: "$19.990 CLP", imagen: "/linea-clasica/Hombres/positive_explore_cutout.png", material: "Algodón", tejido: "Algodón 280g", tallas: ["S","M","L","XL","2XL"], estampado: "DTF HD", corte: "Oversize", descripcion: "Polera oversize de algodón 280g.", linea: "clasica", proveedor: "dp" },
+    { titulo: "Santa DJ", categoria: "hombre", precio: "$19.990 CLP", imagen: "/linea-clasica/Hombres/santa_dj_cutout.png", material: "Algodón", tejido: "Algodón 280g", tallas: ["S","M","L","XL","2XL"], estampado: "DTF HD", corte: "Oversize", descripcion: "Polera oversize de algodón 280g.", linea: "clasica", proveedor: "dp" },
+    { titulo: "Tokyo Underground", categoria: "hombre", precio: "$19.990 CLP", imagen: "/linea-clasica/Hombres/tokyo_underground_cutout.png", material: "Algodón", tejido: "Algodón 280g", tallas: ["S","M","L","XL","2XL"], estampado: "DTF HD", corte: "Oversize", descripcion: "Polera oversize de algodón 280g.", linea: "clasica", proveedor: "dp" }
   ],
   mujer: [
-    { titulo: "Polera Mujer Blanco Mujer en Arbol", precio: "$25.990 CLP", imagen: "/mujer/Polera%20Mujer%20cuello%20redondo%20Blanco%20Mujer%20en%20arbol.png", material: "100% Algodon", tejido: "Jersey 195 grs", tallas: ["XS","S","M","L","XL","2XL"], estampado: "DTF HD", corte: "Femenino Entallado" },
+    { titulo: "Polera Mujer Blanco Mujer en Arbol", precio: "$25.990 CLP", imagen: "/mujer/Polera%20Mujer%20cuello%20redondo%20Blanco%20Mujer%20en%20arbol.png", material: "100% Algodon", tejido: "Jersey 195 grs", tallas: ["XS","S","M","L","XL","2XL"], estampado: "DTF HD", corte: "Femenino Entallado", destacadoNavidad: true },
     { titulo: "Polera Mujer Blanco Mujer en Piano", precio: "$25.990 CLP", imagen: "/mujer/Polera%20Mujer%20cuello%20redondo%20Blanco%20Mujer%20en%20piano.png", material: "100% Algodon", tejido: "Jersey 195 grs", tallas: ["XS","S","M","L","XL","2XL"], estampado: "DTF HD", corte: "Entallado" },
     { titulo: "Polera Mujer Blanco Ojo Mujer", precio: "$25.990 CLP", imagen: "/mujer/Polera%20Mujer%20cuello%20redondo%20Blanco%20Ojo%20Mujer.png", material: "100% Algodon", tejido: "Jersey 195 grs", tallas: ["XS","S","M","L","XL","2XL"], estampado: "DTF HD", corte: "Entallado" },
     { titulo: "Polera Mujer Gris Madre e Hijo", precio: "$25.990 CLP", imagen: "/mujer/Polera%20Mujer%20cuello%20redondo%20Gris%20Madre%20e%20hijo.png", material: "90% Algodon", tejido: "Jersey 195 grs", tallas: ["XS","S","M","L","XL","2XL"], estampado: "DTF HD", corte: "Entallado" },
@@ -57,7 +68,7 @@ const baseDeDatosProductos = {
     { titulo: "Polera Mujer Ritmo Retro", precio: "$25.990 CLP", imagen: "/mujer/Polera%20Mujer%20cuello%20redondo%20negra%20mujer%20Ritmo%20Retro.png", material: "100% Algodon", tejido: "Jersey 195 grs", tallas: ["XS","S","M","L","XL","2XL"], estampado: "DTF HD", corte: "Entallado" }
   ],
   gorras: [
-    { titulo: "Gorra ACDC", precio: "$14.990 CLP", imagen: "/gorras/Gorros%20acdc.png", material: "Gabardina Resistente", tejido: "Trucker 5 Paneles", tallas: ["Ajustable"], estampado: "DTF Premium", corte: "Snapback" },
+    { titulo: "Gorra ACDC", precio: "$14.990 CLP", imagen: "/gorras/Gorros%20acdc.png", material: "Gabardina Resistente", tejido: "Trucker 5 Paneles", tallas: ["Ajustable"], estampado: "DTF Premium", corte: "Snapback", destacadoNavidad: true },
     { titulo: "Gorra Alf", precio: "$14.990 CLP", imagen: "/gorras/Gorros%20alf.png", material: "Gabardina", tejido: "Trucker", tallas: ["Ajustable"], estampado: "DTF", corte: "Snapback" },
     { titulo: "Gorra Audifonos", precio: "$14.990 CLP", imagen: "/gorras/Gorros%20audifonos.png", material: "Gabardina", tejido: "Trucker", tallas: ["Ajustable"], estampado: "DTF", corte: "Snapback" },
     { titulo: "Gorra Bob Marley", precio: "$14.990 CLP", imagen: "/gorras/Gorros%20bob%20marley.png", material: "Gabardina", tejido: "Trucker", tallas: ["Ajustable"], estampado: "DTF", corte: "Snapback" },
@@ -80,25 +91,36 @@ const baseDeDatosProductos = {
     { titulo: "Gorra Yoda Color", precio: "$14.990 CLP", imagen: "/gorras/Gorros%20yoda%20color.png", material: "Gabardina", tejido: "Trucker", tallas: ["Ajustable"], estampado: "DTF", corte: "Snapback" }
   ],
   totebag: [
-    { titulo: "Totebag Capibara", precio: "$23.990 CLP", imagen: "/totebag/Totebag%20Capibara.png", material: "Lona 100% Algodon 300 GSM", tejido: "Canvas Heavy", tallas: ["Unica (38x42)"], estampado: "DTF Eco", corte: "Asas Reforzadas" },
+    { titulo: "Totebag Capibara", precio: "$23.990 CLP", imagen: "/totebag/Totebag%20Capibara.png", material: "Lona 100% Algodon 300 GSM", tejido: "Canvas Heavy", tallas: ["Unica (38x42)"], estampado: "DTF Eco", corte: "Asas Reforzadas", destacadoNavidad: true },
     { titulo: "Totebag Madonna", precio: "$23.990 CLP", imagen: "/totebag/Totebag%20Madonna.png", material: "Lona 300 GSM", tejido: "Canvas", tallas: ["Unica"], estampado: "DTF", corte: "Asas" }
   ],
   cuadros: [
-    { titulo: "Cuadro Decorativo 40x50 Gato", precio: "$27.990 CLP", imagen: "/cuadros/Cuadro%20decorativo%2040x50%20Gato.png", material: "Canvas Fine Art", tejido: "Canvas 320 grs", tallas: ["40x50 cm"], estampado: "Ultra HD", corte: "Bastidor" },
+    { titulo: "Cuadro Decorativo 40x50 Gato", precio: "$27.990 CLP", imagen: "/cuadros/Cuadro%20decorativo%2040x50%20Gato.png", material: "Canvas Fine Art", tejido: "Canvas 320 grs", tallas: ["40x50 cm"], estampado: "Ultra HD", corte: "Bastidor", destacadoNavidad: true },
     { titulo: "Cuadro Decorativo 40x50 Pluma", precio: "$27.990 CLP", imagen: "/cuadros/Cuadro%20decorativo%2040x50%20Pluma.png", material: "Canvas", tejido: "Canvas 320", tallas: ["40x50"], estampado: "HD", corte: "Bastidor" },
     { titulo: "Cuadro Decorativo 40x50 Violin", precio: "$27.990 CLP", imagen: "/cuadros/Cuadro%20decorativo%2040x50%20Violin.png", material: "Canvas", tejido: "Canvas 320", tallas: ["40x50"], estampado: "HD", corte: "Bastidor" }
   ],
   llaveros: [
-    { titulo: "Llavero Alf", precio: "$6.990 CLP", imagen: "/llaveros/Llaveros%20Alf.png", material: "Acrilico Premium", tejido: "Acrilico 3mm", tallas: ["Unica"], estampado: "Full Color", corte: "Laser" },
+    { titulo: "Llavero Alf", precio: "$6.990 CLP", imagen: "/llaveros/Llaveros%20Alf.png", material: "Acrilico Premium", tejido: "Acrilico 3mm", tallas: ["Unica"], estampado: "Full Color", corte: "Laser", destacadoNavidad: true },
     { titulo: "Llavero Gorillaz", precio: "$6.990 CLP", imagen: "/llaveros/Llaveros%20Gorilaz.png", material: "Acrilico", tejido: "Acrilico 3mm", tallas: ["Unica"], estampado: "Full Color", corte: "Laser" },
     { titulo: "Llavero Ramones", precio: "$6.990 CLP", imagen: "/llaveros/Llaveros%20Ramones.png", material: "Acrilico", tejido: "Acrilico 3mm", tallas: ["Unica"], estampado: "Full Color", corte: "Laser" },
     { titulo: "Llavero Simpson", precio: "$6.990 CLP", imagen: "/llaveros/Llaveros%20Simpson.png", material: "Acrilico", tejido: "Acrilico 3mm", tallas: ["Unica"], estampado: "Full Color", corte: "Laser" }
   ],
   mousepad: [
-    { titulo: "Mouse Pad Gamer Batman vs Superman", precio: "$27.990 CLP", imagen: "/mousepad/Mouse%20Pad%20Gamer%20Batman%20vs%20Superman.png", material: "Microfibra Antideslizante", tejido: "Speed", tallas: ["XL Gamer"], estampado: "Sublimacion HD", corte: "Bordes Cosidos" },
+    { titulo: "Mouse Pad Gamer Batman vs Superman", precio: "$27.990 CLP", imagen: "/mousepad/Mouse%20Pad%20Gamer%20Batman%20vs%20Superman.png", material: "Microfibra Antideslizante", tejido: "Speed", tallas: ["XL Gamer"], estampado: "Sublimacion HD", corte: "Bordes Cosidos", destacadoNavidad: true },
     { titulo: "Mouse Pad Gamer Breaking Bad", precio: "$27.990 CLP", imagen: "/mousepad/Mouse%20Pad%20Gamer%20Breaking%20Bad.png", material: "Microfibra", tejido: "Speed", tallas: ["XL"], estampado: "Sublimacion", corte: "Bordes Cosidos" },
     { titulo: "Mouse Pad Gamer Peaky Blinders", precio: "$27.990 CLP", imagen: "/mousepad/Mouse%20Pad%20Gamer%20Peaky%20Blindres.png", material: "Microfibra", tejido: "Speed", tallas: ["XL"], estampado: "Sublimacion", corte: "Bordes Cosidos" }
   ]
 };
 
-export default baseDeDatosProductos;
+const productosEtiquetados = Object.fromEntries(
+  Object.entries(baseDeDatosProductos).map(([categoria, productos]) => [
+    categoria,
+    productos.map(producto => ({
+      ...producto,
+      linea: producto.linea || "vip",
+      proveedor: producto.proveedor || "tee"
+    }))
+  ])
+);
+
+export default productosEtiquetados;

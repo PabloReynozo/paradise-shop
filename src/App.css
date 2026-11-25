@@ -271,3 +271,238 @@ body {
 .checkout-container {
   margin-top: 1rem;
 }
+
+.site-shell.christmas-site {
+  --christmas-bar-height: 2rem;
+  padding-top: var(--christmas-bar-height);
+}
+
+.christmas-topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 300;
+  height: var(--christmas-bar-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1rem;
+  background: #111;
+  color: #D4AF37;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-align: center;
+}
+
+.christmas-logo-detail {
+  align-self: flex-start;
+  margin-left: 0.12rem;
+  color: #D4AF37 !important;
+  font-size: 0.82rem !important;
+  line-height: 1;
+}
+
+.christmas-hero {
+  max-width: 1200px;
+  margin: 2rem auto 1.5rem;
+  padding: 2.4rem 2rem;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 12px;
+  background: linear-gradient(120deg, #111 0%, #1b1915 100%);
+  color: #f3ece2;
+  text-align: center;
+}
+
+.christmas-hero-content {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.christmas-eyebrow {
+  color: #D4AF37;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.christmas-hero h1 {
+  margin: 0.55rem 0 0.45rem;
+  color: #fff;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 900;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+}
+
+.christmas-hero p {
+  color: #c9c2b4;
+  font-size: 0.95rem;
+}
+
+.christmas-hero-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 1.35rem;
+}
+
+.christmas-hero-actions button,
+.christmas-gift-guide-grid button {
+  border: 1px solid rgba(212, 175, 55, 0.55);
+  border-radius: 6px;
+  background: transparent;
+  color: #D4AF37;
+  cursor: pointer;
+  font: inherit;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.christmas-hero-actions button {
+  padding: 0.65rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.christmas-hero-actions button:hover,
+.christmas-gift-guide-grid button:hover {
+  border-color: #D4AF37;
+  background: rgba(212, 175, 55, 0.12);
+  color: #f3d982;
+}
+
+.christmas-gift-guide {
+  max-width: 1200px;
+  margin: 0 auto 2rem;
+  padding: 0 1rem;
+}
+
+.christmas-gift-guide h2 {
+  margin: 0 0 0.8rem;
+  color: #111;
+  font-size: 1rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.christmas-gift-guide-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.christmas-gift-guide-grid button {
+  display: flex;
+  min-height: 74px;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.25rem;
+  padding: 0.8rem;
+  background: #111;
+  text-align: left;
+}
+
+.christmas-gift-guide-grid button span {
+  color: #f3ece2;
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+.christmas-gift-guide-grid button small {
+  color: #c9c2b4;
+  font-size: 0.72rem;
+}
+
+.christmas-budget-label {
+  align-self: center;
+  color: #765d17;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.holiday-product-card:hover {
+  border-color: #D4AF37;
+  box-shadow: 0 8px 24px rgba(212, 175, 55, 0.12);
+}
+
+.holiday-product-card .product-image-container {
+  position: relative;
+}
+
+.holiday-gift-badge {
+  position: absolute;
+  top: 0.55rem;
+  left: 0.55rem;
+  z-index: 1;
+  padding: 0.28rem 0.48rem;
+  border: 1px solid rgba(212, 175, 55, 0.65);
+  border-radius: 3px;
+  background: rgba(17, 17, 17, 0.9);
+  color: #D4AF37;
+  font-size: 0.63rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  line-height: 1.2;
+}
+
+.christmas-footer-note {
+  max-width: 1280px;
+  margin: 1.4rem auto 0;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(212, 175, 55, 0.25);
+  color: #D4AF37;
+  font-size: 0.78rem;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .christmas-hero {
+    margin: 1.4rem 1rem 1rem;
+    padding: 1.8rem 1.2rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .site-shell.christmas-site {
+    --christmas-bar-height: 2.8rem;
+  }
+
+  .christmas-topbar {
+    padding: 0 0.55rem;
+    font-size: 0.6rem;
+    letter-spacing: 0.035em;
+    line-height: 1.2;
+  }
+
+  .christmas-hero {
+    margin: 1rem 0.8rem;
+    padding: 1.5rem 1rem;
+  }
+
+  .christmas-hero p {
+    font-size: 0.82rem;
+  }
+
+  .christmas-hero-actions {
+    gap: 0.45rem;
+  }
+
+  .christmas-hero-actions button {
+    padding: 0.58rem 0.7rem;
+    font-size: 0.72rem;
+  }
+
+  .christmas-gift-guide-grid {
+    grid-template-columns: 1fr;
+    gap: 0.55rem;
+  }
+
+  .christmas-gift-guide-grid button {
+    min-height: 62px;
+  }
+}

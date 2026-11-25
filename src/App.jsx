@@ -10,12 +10,58 @@ import imgCuadros from './images/cuadros.png';
 import imgLlaveros from './images/llaveros.png';
 import imgMousepad from './images/mousepad.png';
 
+const isChristmas = true;
 const MAPEO_TEE_TALLAS = { 'XS': 1, 'S': 2, 'M': 3, 'L': 4, 'XL': 5, '2XL': 16, '3XL': 17, '4XL': 18, '5XL': 19, 'Única (38x42 cm)': 6, 'Única': 6, '40x50 cm': 19, 'Ajustable Snapback': 6, 'XL Gamer': 6, 'Ajustable': 6 };
 function mapearATee(p) { var tl = (p.titulo||'').toLowerCase(); var idSuperficie = 37; if (tl.indexOf('canguro') !== -1) idSuperficie = 9; else if (tl.indexOf('premium') !== -1) idSuperficie = 31; else if (tl.indexOf('polo') !== -1) idSuperficie = 1; else if (tl.indexOf('gorra') !== -1) idSuperficie = 14; else if (tl.indexOf('totebag') !== -1) idSuperficie = 32; else if (tl.indexOf('cuadro') !== -1) idSuperficie = 26; else if (tl.indexOf('llavero') !== -1) idSuperficie = 29; else if (tl.indexOf('mouse') !== -1) idSuperficie = 25; var idColor = (tl.indexOf('negra') !== -1 || tl.indexOf('negro') !== -1) ? 2 : 1; var idTalla = MAPEO_TEE_TALLAS[p.tallaEscogida || p.tallas[0]] || 2; return { idSuperficie: idSuperficie, idColor: idColor, idTalla: idTalla }; }
 
-const baseDeDatosProductos = {
+const catalogoProductos = {
   hombre: [
-    { titulo: "Polera Oversize 300 Blanca", precio: "$23.990 CLP", imagen: "/hombre/Polera%20Oversize%20300%20Blanca.png", material: "80% Algodon y 20% Poliester", tejido: "Interlock 280 grs", tallas: ["S","M","L","XL","2XL"], estampado: "Impresion Digital DTF Textil HD", corte: "Oversize Fit Streetwear" },
+    {
+      titulo: "Polera Oversize Beige Paradise Sound Garage",
+      precio: "$23.990 CLP",
+      imagen: "/hombre/Polera Oversize Beige Paradise Sound Garage Espalda.png"
+    },
+    {
+      titulo: "Polera Oversize Blanca Paradise Sound Garage",
+      precio: "$23.990 CLP",
+      imagen: "/hombre/Polera Oversize Blanca Paradise Sound Garage Espalda.png"
+    },
+    {
+      titulo: "Polera Oversize Negra Paradise Sound Back",
+      precio: "$23.990 CLP",
+      imagen: "/hombre/Polera%20Overside%20Negra%20Paradise%20Sound%20Back%20Espalda.png"
+    },
+    {
+      titulo: "Polera Oversize Beige Wake Yo Game Up",
+      precio: "$23.990 CLP",
+      imagen: "/hombre/Polera Oversize Beige WAKE YO  GAME UP Espalda.png"
+    },
+    {
+      titulo: "Polera Oversize Blanca Back To Basics",
+      precio: "$23.990 CLP",
+      imagen: "/hombre/Polera Oversize Blanca Back To Basics Frontal.png"
+    },
+    {
+      titulo: "Polera Oversize Negro Back To Basics",
+      precio: "$23.990 CLP",
+      imagen: "/hombre/Polera Oversize negro Back To Basics Frontal.png"
+    },
+    {
+      titulo: "Polerón Canguro Premium Negro Back To Basics",
+      precio: "$42.990 CLP",
+      imagen: "/hombre/Polerón canguro premium negro Back To Basics Espalda.png"
+    },
+    {
+      titulo: "Polera Oversize Blanco Sol YinYang",
+      precio: "$23.990 CLP",
+      imagen: "/hombre/Polera Oversize Blanco Sol YinYang Espalda.png"
+    },
+    {
+      titulo: "Polera Oversize Blanco Old Skool Player",
+      precio: "$23.990 CLP",
+      imagen: "/hombre/Polera Oversize Blanco Old Skool Player Espalda.png"
+    },
+    { titulo: "Polera Oversize 300 Blanca", precio: "$23.990 CLP", imagen: "/hombre/Polera%20Oversize%20300%20Blanca.png", material: "80% Algodon y 20% Poliester", tejido: "Interlock 280 grs", tallas: ["S","M","L","XL","2XL"], estampado: "Impresion Digital DTF Textil HD", corte: "Oversize Fit Streetwear", destacadoNavidad: true },
     { titulo: "Polera Oversize Aguila Blanca", precio: "$23.990 CLP", imagen: "/hombre/Polera%20Oversize%20aguila%20Blanca.png", material: "80% Algodon y 20% Poliester", tejido: "Interlock 280 grs", tallas: ["S","M","L","XL","2XL"], estampado: "DTF HD", corte: "Oversize" },
     { titulo: "Polera Oversize Blanca Hombre", precio: "$23.990 CLP", imagen: "/hombre/Polera%20Oversize%20Blanca%20Hombre.png", material: "80% Algodon", tejido: "Interlock 280 grs", tallas: ["S","M","L","XL","2XL"], estampado: "DTF HD", corte: "Oversize" },
     { titulo: "Polera Oversize Breaking Bad Blanca", precio: "$23.990 CLP", imagen: "/hombre/Polera%20Oversize%20Breaking%20Bad%20Blanca.png", material: "80% Algodon", tejido: "Interlock 280 grs", tallas: ["S","M","L","XL","2XL"], estampado: "DTF HD", corte: "Oversize" },
@@ -35,7 +81,7 @@ const baseDeDatosProductos = {
     { titulo: "Polera Polo Cuello Redondo Blanca Huella", precio: "$25.990 CLP", imagen: "/hombre/Polera%20polo%20cuello%20redondo%20blanca%20Huella.png", material: "100% Algodon", tejido: "Jersey 195 grs", tallas: ["S","M","L","XL","2XL","3XL","4XL","5XL"], estampado: "DTF HD", corte: "Regular" },
     { titulo: "Polera Polo Cuello Redondo Blanca Moto Playa", precio: "$25.990 CLP", imagen: "/hombre/Polera%20polo%20cuello%20redondo%20blanca%20moto%20en%20la%20playa.png", material: "100% Algodon", tejido: "Jersey 195 grs", tallas: ["S","M","L","XL","2XL","3XL","4XL","5XL"], estampado: "DTF HD", corte: "Regular" },
     { titulo: "Polera Polo Cuello Redondo Blanca Superman", precio: "$25.990 CLP", imagen: "/hombre/Polera%20polo%20cuello%20redondo%20blanca%20superman.png", material: "100% Algodon", tejido: "Jersey 195 grs", tallas: ["S","M","L","XL","2XL","3XL","4XL","5XL"], estampado: "DTF HD", corte: "Regular" },
-    { titulo: "Polera Polo Cuello Redondo Negra Montana", precio: "$25.990 CLP", imagen: "/hombre/Polera-polo-negra-montana.png", material: "100% Algodon", tejido: "Jersey 195 grs", tallas: ["S","M","L","XL","2XL","3XL","4XL","5XL"], estampado: "DTF HD", corte: "Regular" },
+    { titulo: "Polera Polo Cuello Redondo Negra Montana", precio: "$25.990 CLP", imagen: "/hombre/Polera%20polo%20cuello%20redondo%20negra%20en%20la%20monta%C3%B1a.png", material: "100% Algodon", tejido: "Jersey 195 grs", tallas: ["S","M","L","XL","2XL","3XL","4XL","5XL"], estampado: "DTF HD", corte: "Regular" },
     { titulo: "Polera Polo Cuello Redondo Negra Motocicleta", precio: "$25.990 CLP", imagen: "/hombre/Polera%20polo%20cuello%20redondo%20negra%20motocicleta.png", material: "100% Algodon", tejido: "Jersey 195 grs", tallas: ["S","M","L","XL","2XL","3XL","4XL","5XL"], estampado: "DTF HD", corte: "Regular" },
     { titulo: "Polera Premium Darth Vader Negra", precio: "$26.990 CLP", imagen: "/hombre/Polera%20premium%20cuello%20redondo%20Darth%20Vader%20negra.png", material: "100% Algodon Peinado", tejido: "Jersey 180 grs", tallas: ["S","M","L","XL","2XL","3XL"], estampado: "DTF HD", corte: "Standard Premium" },
     { titulo: "Polera Premium Goku Negra", precio: "$26.990 CLP", imagen: "/hombre/Polera%20premium%20cuello%20redondo%20Goku%20Negra.png", material: "100% Algodon Peinado", tejido: "Jersey 180 grs", tallas: ["S","M","L","XL","2XL","3XL"], estampado: "DTF HD", corte: "Premium" },
@@ -47,10 +93,21 @@ const baseDeDatosProductos = {
     { titulo: "Poleron Canguro Premium Gorilla Feelgood", nombreComercial: "Gorilla Feelgood", precio: "$42.990 CLP", imagen: "/hombre/Poler%C3%B3n%20canguro%20premium%20gorilla_feelgood_cutout.png", material: "90% Algodon 10% Poliester", tejido: "Franela 340 grs", tallas: ["S","M","L","XL"], estampado: "DTF HD", corte: "Hoodie Premium" },
     { titulo: "Poleron Canguro Premium Gorilla Rasta", nombreComercial: "Gorilla Rasta", precio: "$42.990 CLP", imagen: "/hombre/Poleron%20Canguro%20Premium%20gorilla_rasta_cutout.png", material: "90% Algodon 10% Poliester", tejido: "Franela 340 grs", tallas: ["S","M","L","XL"], estampado: "DTF HD", corte: "Hoodie Premium" },
     { titulo: "Poleron Canguro Premium Negro Gorilla Feelgood", nombreComercial: "Gorilla Feelgood Negro", precio: "$42.990 CLP", imagen: "/hombre/Poler%C3%B3n%20canguro%20premium%20negro%20gorilla_feelgood_cutout.png", material: "90% Algodon 10% Poliester", tejido: "Franela 340 grs", tallas: ["S","M","L","XL"], estampado: "DTF HD", corte: "Hoodie Premium" },
-    { titulo: "Poleron Canguro Premium Phil Collins", nombreComercial: "Phil Collins", precio: "$42.990 CLP", imagen: "/hombre/Poleron%20Canguro%20Premium%20phil_collins_bw.png", material: "90% Algodon 10% Poliester", tejido: "Franela 340 grs", tallas: ["S","M","L","XL"], estampado: "DTF HD", corte: "Hoodie Premium" }
+    { titulo: "Poleron Canguro Premium Phil Collins", nombreComercial: "Phil Collins", precio: "$42.990 CLP", imagen: "/hombre/Poleron%20Canguro%20Premium%20phil_collins_bw.png", material: "90% Algodon 10% Poliester", tejido: "Franela 340 grs", tallas: ["S","M","L","XL"], estampado: "DTF HD", corte: "Hoodie Premium" },
+    { titulo: "Ace Playing Color", categoria: "hombre", precio: "$19.990 CLP", imagen: "/linea-clasica/Hombres/ace_playing_color.png", material: "Algodón", tejido: "Algodón 280g", tallas: ["S","M","L","XL","2XL"], estampado: "DTF HD", corte: "Oversize", descripcion: "Polera oversize de algodón 280g.", linea: "clasica", proveedor: "dp", destacadoNavidad: true },
+    { titulo: "Ame Sombre", categoria: "hombre", precio: "$19.990 CLP", imagen: "/linea-clasica/Hombres/ame_sombre_cutout.png", material: "Algodón", tejido: "Algodón 280g", tallas: ["S","M","L","XL","2XL"], estampado: "DTF HD", corte: "Oversize", descripcion: "Polera oversize de algodón 280g.", linea: "clasica", proveedor: "dp" },
+    { titulo: "As Picas Luck", categoria: "hombre", precio: "$19.990 CLP", imagen: "/linea-clasica/Hombres/as_picas_luck_cutout.png", material: "Algodón", tejido: "Algodón 280g", tallas: ["S","M","L","XL","2XL"], estampado: "DTF HD", corte: "Oversize", descripcion: "Polera oversize de algodón 280g.", linea: "clasica", proveedor: "dp" },
+    { titulo: "Divine Angel", categoria: "hombre", precio: "$19.990 CLP", imagen: "/linea-clasica/Hombres/divine_angel_cutout.png", material: "Algodón", tejido: "Algodón 280g", tallas: ["S","M","L","XL","2XL"], estampado: "DTF HD", corte: "Oversize", descripcion: "Polera oversize de algodón 280g.", linea: "clasica", proveedor: "dp" },
+    { titulo: "Dreams Wake Up", categoria: "hombre", precio: "$19.990 CLP", imagen: "/linea-clasica/Hombres/dreams_wake_up_cutout.png", material: "Algodón", tejido: "Algodón 280g", tallas: ["S","M","L","XL","2XL"], estampado: "DTF HD", corte: "Oversize", descripcion: "Polera oversize de algodón 280g.", linea: "clasica", proveedor: "dp" },
+    { titulo: "Gamer", categoria: "hombre", precio: "$19.990 CLP", imagen: "/linea-clasica/Hombres/gamer_cutout.png", material: "Algodón", tejido: "Algodón 280g", tallas: ["S","M","L","XL","2XL"], estampado: "DTF HD", corte: "Oversize", descripcion: "Polera oversize de algodón 280g.", linea: "clasica", proveedor: "dp" },
+    { titulo: "No Limits", categoria: "hombre", precio: "$19.990 CLP", imagen: "/linea-clasica/Hombres/no_limits_cutout.png", material: "Algodón", tejido: "Algodón 280g", tallas: ["S","M","L","XL","2XL"], estampado: "DTF HD", corte: "Oversize", descripcion: "Polera oversize de algodón 280g.", linea: "clasica", proveedor: "dp" },
+    { titulo: "Peace Paloma", categoria: "hombre", precio: "$19.990 CLP", imagen: "/linea-clasica/Hombres/peace_paloma_cutout.png", material: "Algodón", tejido: "Algodón 280g", tallas: ["S","M","L","XL","2XL"], estampado: "DTF HD", corte: "Oversize", descripcion: "Polera oversize de algodón 280g.", linea: "clasica", proveedor: "dp" },
+    { titulo: "Positive Explore", categoria: "hombre", precio: "$19.990 CLP", imagen: "/linea-clasica/Hombres/positive_explore_cutout.png", material: "Algodón", tejido: "Algodón 280g", tallas: ["S","M","L","XL","2XL"], estampado: "DTF HD", corte: "Oversize", descripcion: "Polera oversize de algodón 280g.", linea: "clasica", proveedor: "dp" },
+    { titulo: "Santa DJ", categoria: "hombre", precio: "$19.990 CLP", imagen: "/linea-clasica/Hombres/santa_dj_cutout.png", material: "Algodón", tejido: "Algodón 280g", tallas: ["S","M","L","XL","2XL"], estampado: "DTF HD", corte: "Oversize", descripcion: "Polera oversize de algodón 280g.", linea: "clasica", proveedor: "dp" },
+    { titulo: "Tokyo Underground", categoria: "hombre", precio: "$19.990 CLP", imagen: "/linea-clasica/Hombres/tokyo_underground_cutout.png", material: "Algodón", tejido: "Algodón 280g", tallas: ["S","M","L","XL","2XL"], estampado: "DTF HD", corte: "Oversize", descripcion: "Polera oversize de algodón 280g.", linea: "clasica", proveedor: "dp" }
   ],
   mujer: [
-    { titulo: "Polera Mujer Mujer en Arbol", nombreComercial: "Mujer en Árbol", precio: "$25.990 CLP", imagen: "/mujer/Polera%20Mujer%20cuello%20redondo%20Blanco%20Mujer%20en%20arbol.png", material: "100% Algodon", tejido: "Jersey 195 grs", tallas: ["XS","S","M","L","XL","2XL"], estampado: "DTF HD", corte: "Femenino Entallado" },
+    { titulo: "Polera Mujer Mujer en Arbol", nombreComercial: "Mujer en Árbol", precio: "$25.990 CLP", imagen: "/mujer/Polera%20Mujer%20cuello%20redondo%20Blanco%20Mujer%20en%20arbol.png", material: "100% Algodon", tejido: "Jersey 195 grs", tallas: ["XS","S","M","L","XL","2XL"], estampado: "DTF HD", corte: "Femenino Entallado", destacadoNavidad: true },
     { titulo: "Polera Mujer Mujer en Piano", nombreComercial: "Mujer en Piano", precio: "$25.990 CLP", imagen: "/mujer/Polera%20Mujer%20cuello%20redondo%20Blanco%20Mujer%20en%20piano.png", material: "100% Algodon", tejido: "Jersey 195 grs", tallas: ["XS","S","M","L","XL","2XL"], estampado: "DTF HD", corte: "Entallado" },
     { titulo: "Polera Mujer Ojo de Mujer", nombreComercial: "Ojo de Mujer", precio: "$25.990 CLP", imagen: "/mujer/Polera%20Mujer%20cuello%20redondo%20Blanco%20Ojo%20Mujer.png", material: "100% Algodon", tejido: "Jersey 195 grs", tallas: ["XS","S","M","L","XL","2XL"], estampado: "DTF HD", corte: "Entallado" },
     { titulo: "Polera Mujer Madre e Hijo", nombreComercial: "Madre e Hijo", precio: "$25.990 CLP", imagen: "/mujer/Polera%20Mujer%20cuello%20redondo%20Gris%20Madre%20e%20hijo.png", material: "90% Algodon", tejido: "Jersey 195 grs", tallas: ["XS","S","M","L","XL","2XL"], estampado: "DTF HD", corte: "Entallado" },
@@ -76,7 +133,7 @@ const baseDeDatosProductos = {
     { titulo: "Polera Mujer Ritmo Retro", nombreComercial: "Ritmo Retro", precio: "$25.990 CLP", imagen: "/mujer/Polera%20Mujer%20cuello%20redondo%20negra%20mujer%20Ritmo%20Retro.png", material: "100% Algodon", tejido: "Jersey 195 grs", tallas: ["XS","S","M","L","XL","2XL"], estampado: "DTF HD", corte: "Entallado" }
   ],
   gorras: [
-    { titulo: "Gorra ACDC", precio: "$14.990 CLP", imagen: "/gorras/Gorros%20acdc.png", material: "Gabardina Resistente", tejido: "Trucker 5 Paneles", tallas: ["Ajustable"], estampado: "DTF Premium", corte: "Snapback" },
+    { titulo: "Gorra ACDC", precio: "$14.990 CLP", imagen: "/gorras/Gorros%20acdc.png", material: "Gabardina Resistente", tejido: "Trucker 5 Paneles", tallas: ["Ajustable"], estampado: "DTF Premium", corte: "Snapback", destacadoNavidad: true },
     { titulo: "Gorra Alf", precio: "$14.990 CLP", imagen: "/gorras/Gorros%20alf.png", material: "Gabardina", tejido: "Trucker", tallas: ["Ajustable"], estampado: "DTF", corte: "Snapback" },
     { titulo: "Gorra Audifonos", precio: "$14.990 CLP", imagen: "/gorras/Gorros%20audifonos.png", material: "Gabardina", tejido: "Trucker", tallas: ["Ajustable"], estampado: "DTF", corte: "Snapback" },
     { titulo: "Gorra Bob Marley", precio: "$14.990 CLP", imagen: "/gorras/Gorros%20bob%20marley.png", material: "Gabardina", tejido: "Trucker", tallas: ["Ajustable"], estampado: "DTF", corte: "Snapback" },
@@ -99,38 +156,53 @@ const baseDeDatosProductos = {
     { titulo: "Gorra Yoda Color", precio: "$14.990 CLP", imagen: "/gorras/Gorros%20yoda%20color.png", material: "Gabardina", tejido: "Trucker", tallas: ["Ajustable"], estampado: "DTF", corte: "Snapback" }
   ],
   totebag: [
-    { titulo: "Totebag Capibara", precio: "$23.990 CLP", imagen: "/totebag/Totebag%20Capibara.png", material: "Lona 100% Algodon 300 GSM", tejido: "Canvas Heavy", tallas: ["Unica (38x42)"], estampado: "DTF Eco", corte: "Asas Reforzadas" },
+    { titulo: "Totebag Capibara", precio: "$23.990 CLP", imagen: "/totebag/Totebag%20Capibara.png", material: "Lona 100% Algodon 300 GSM", tejido: "Canvas Heavy", tallas: ["Unica (38x42)"], estampado: "DTF Eco", corte: "Asas Reforzadas", destacadoNavidad: true },
     { titulo: "Totebag Madonna", precio: "$23.990 CLP", imagen: "/totebag/Totebag%20Madonna.png", material: "Lona 300 GSM", tejido: "Canvas", tallas: ["Unica"], estampado: "DTF", corte: "Asas" }
   ],
   cuadros: [
-    { titulo: "Cuadro Decorativo 40x50 Gato", precio: "$27.990 CLP", imagen: "/cuadros/Cuadro%20decorativo%2040x50%20Gato.png", material: "Canvas Fine Art", tejido: "Canvas 320 grs", tallas: ["40x50 cm"], estampado: "Ultra HD", corte: "Bastidor" },
+    { titulo: "Cuadro Decorativo 40x50 Gato", precio: "$27.990 CLP", imagen: "/cuadros/Cuadro%20decorativo%2040x50%20Gato.png", material: "Canvas Fine Art", tejido: "Canvas 320 grs", tallas: ["40x50 cm"], estampado: "Ultra HD", corte: "Bastidor", destacadoNavidad: true },
     { titulo: "Cuadro Decorativo 40x50 Pluma", precio: "$27.990 CLP", imagen: "/cuadros/Cuadro%20decorativo%2040x50%20Pluma.png", material: "Canvas", tejido: "Canvas 320", tallas: ["40x50"], estampado: "HD", corte: "Bastidor" },
     { titulo: "Cuadro Decorativo 40x50 Violin", precio: "$27.990 CLP", imagen: "/cuadros/Cuadro%20decorativo%2040x50%20Violin.png", material: "Canvas", tejido: "Canvas 320", tallas: ["40x50"], estampado: "HD", corte: "Bastidor" }
   ],
   llaveros: [
-    { titulo: "Llavero Alf", precio: "$6.990 CLP", imagen: "/llaveros/Llaveros%20Alf.png", material: "Acrilico Premium", tejido: "Acrilico 3mm", tallas: ["Unica"], estampado: "Full Color", corte: "Laser" },
+    { titulo: "Llavero Alf", precio: "$6.990 CLP", imagen: "/llaveros/Llaveros%20Alf.png", material: "Acrilico Premium", tejido: "Acrilico 3mm", tallas: ["Unica"], estampado: "Full Color", corte: "Laser", destacadoNavidad: true },
     { titulo: "Llavero Gorillaz", precio: "$6.990 CLP", imagen: "/llaveros/Llaveros%20Gorilaz.png", material: "Acrilico", tejido: "Acrilico 3mm", tallas: ["Unica"], estampado: "Full Color", corte: "Laser" },
     { titulo: "Llavero Ramones", precio: "$6.990 CLP", imagen: "/llaveros/Llaveros%20Ramones.png", material: "Acrilico", tejido: "Acrilico 3mm", tallas: ["Unica"], estampado: "Full Color", corte: "Laser" },
     { titulo: "Llavero Simpson", precio: "$6.990 CLP", imagen: "/llaveros/Llaveros%20Simpson.png", material: "Acrilico", tejido: "Acrilico 3mm", tallas: ["Unica"], estampado: "Full Color", corte: "Laser" }
   ],
   mousepad: [
-    { titulo: "Mouse Pad Gamer Batman vs Superman", precio: "$27.990 CLP", imagen: "/mousepad/Mouse%20Pad%20Gamer%20Batman%20vs%20Superman.png", material: "Microfibra Antideslizante", tejido: "Speed", tallas: ["XL Gamer"], estampado: "Sublimacion HD", corte: "Bordes Cosidos" },
+    { titulo: "Mouse Pad Gamer Batman vs Superman", precio: "$27.990 CLP", imagen: "/mousepad/Mouse%20Pad%20Gamer%20Batman%20vs%20Superman.png", material: "Microfibra Antideslizante", tejido: "Speed", tallas: ["XL Gamer"], estampado: "Sublimacion HD", corte: "Bordes Cosidos", destacadoNavidad: true },
     { titulo: "Mouse Pad Gamer Breaking Bad", precio: "$27.990 CLP", imagen: "/mousepad/Mouse%20Pad%20Gamer%20Breaking%20Bad.png", material: "Microfibra", tejido: "Speed", tallas: ["XL"], estampado: "Sublimacion", corte: "Bordes Cosidos" },
     { titulo: "Mouse Pad Gamer Peaky Blinders", precio: "$27.990 CLP", imagen: "/mousepad/Mouse%20Pad%20Gamer%20Peaky%20Blindres.png", material: "Microfibra", tejido: "Speed", tallas: ["XL"], estampado: "Sublimacion", corte: "Bordes Cosidos" }
   ]
 };
 
+const baseDeDatosProductos = Object.fromEntries(
+  Object.entries(catalogoProductos).map(([categoria, productos]) => [
+    categoria,
+    productos.map(producto => ({
+      ...producto,
+      linea: producto.linea || "vip",
+      proveedor: producto.proveedor || "tee"
+    }))
+  ])
+);
+
 const CategoryCard = ({ img, title, onClick, isActive }) => (
-  <div onClick={onClick} style={{ cursor: 'pointer', border: isActive ? '2.5px solid #ff007f' : '1px solid #e8e0d6', borderRadius: '16px', overflow: 'hidden', background: '#fff', position: 'relative', height: '200px', boxShadow: isActive ? '0 8px 24px rgba(255,0,127,0.15)' : '0 6px 20px rgba(0,0,0,0.06)', transition: 'all 0.25s ease', transform: isActive ? 'translateY(-2px)' : 'none' }}>
-    <div style={{ height: '135px', background: '#faf7f2', display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '1rem' }}><img src={img} alt={title} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} /></div>
+  <div onClick={onClick} style={{ cursor: 'pointer', border: isActive ? '2.5px solid #ff007f' : '1px solid #e8e0d6', borderRadius: '16px', overflow: 'hidden', background: '#fff', position: 'relative', height: '220px', boxShadow: isActive ? '0 8px 24px rgba(255,0,127,0.15)' : '0 6px 20px rgba(0,0,0,0.06)', transition: 'all 0.25s ease', transform: isActive ? 'translateY(-2px)' : 'none' }}>
+    <div style={{ height: '165px', background: '#faf7f2', display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '0.5rem' }}><img src={img} alt={title} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} /></div>
     <div style={{ position: 'absolute', bottom: '0.7rem', left: '0.7rem', right: '0.7rem', backgroundColor: isActive ? '#ff007f' : '#111', color: '#fff', padding: '0.6rem', textAlign: 'center', textTransform: 'uppercase', fontWeight: '700', fontSize: '0.82rem', borderRadius: '8px', letterSpacing: '0.5px' }}>{title}</div>
   </div>
 );
 
-const ProductCard = ({ img, title, price, onComprar, onAbrirDetalle }) => (
-  <div className="product-card">
-    <div className="product-image-container" onClick={onAbrirDetalle} style={{ cursor: 'pointer' }}><img src={img} alt={title} onError={(e)=>{ e.target.onerror=null; e.target.src='/hombre/Polera%20Oversize%20300%20Blanca.png'; }} /></div>
+const ProductCard = ({ img, title, price, linea, destacadoNavidad, onComprar, onAbrirDetalle }) => (
+  <div className={`product-card${isChristmas ? ' holiday-product-card' : ''}`}>
+    <div className="product-image-container" onClick={onAbrirDetalle} style={{ cursor: 'pointer' }}>
+      <img src={img} alt={title} onError={(e)=>{ e.target.onerror=null; e.target.src='/hombre/Polera%20Oversize%20300%20Blanca.png'; }} />
+      {isChristmas && destacadoNavidad && <span className="holiday-gift-badge">🎁 Regalo Ideal</span>}
+    </div>
     <div className="product-info">
+      <span style={{ display: 'inline-block', marginBottom: '0.35rem', padding: '0.15rem 0.4rem', border: '1px solid #e8e0d6', borderRadius: '3px', color: '#555', fontSize: '0.65rem', fontWeight: '700', textTransform: 'uppercase' }}>Línea {linea === 'clasica' ? 'Clásica' : 'VIP'}</span>
       <h4 className="product-title" onClick={onAbrirDetalle} style={{ cursor: 'pointer' }}>{title}</h4>
       <p className="product-price">{price}</p>
       <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
@@ -144,6 +216,8 @@ const ProductCard = ({ img, title, price, onComprar, onAbrirDetalle }) => (
 function App() {
   const [mensajeExito, setMensajeExito] = useState("");
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null);
+  const [lineaSeleccionada, setLineaSeleccionada] = useState(null);
+  const [presupuestoMaximo, setPresupuestoMaximo] = useState(null);
   const [busqueda, setBusqueda] = useState('');
   const [mostrarBuscador, setMostrarBuscador] = useState(false);
   const [carrito, setCarrito] = useState([]);
@@ -174,6 +248,25 @@ function App() {
 
   const filtrarPorCategoria = (key) => {
     setCategoriaSeleccionada(categoriaSeleccionada === key ? null : key);
+    setPresupuestoMaximo(null);
+    setBusqueda('');
+    setMostrarCheckout(false);
+    if (catalogoRef.current) catalogoRef.current.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const filtrarPorLinea = (linea) => {
+    setLineaSeleccionada(linea);
+    setPresupuestoMaximo(null);
+    setCategoriaSeleccionada(null);
+    setBusqueda('');
+    setMostrarCheckout(false);
+    if (catalogoRef.current) catalogoRef.current.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const filtrarPorPresupuesto = (maximo) => {
+    setPresupuestoMaximo(maximo);
+    setLineaSeleccionada(null);
+    setCategoriaSeleccionada(null);
     setBusqueda('');
     setMostrarCheckout(false);
     if (catalogoRef.current) catalogoRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -202,15 +295,20 @@ function App() {
   const eliminarDelCarrito = (idx) => setCarrito(carrito.filter((_, i) => i !== idx));
   const calcularTotal = () => carrito.reduce((acc, item) => acc + (item.precioNum || 0), 0).toLocaleString('es-CL');
 
-  const titulosSeccion = { hombre: "Hombre / Unisex - 33 productos", mujer: "Mujer - 24 productos", gorras: "Gorras / Jockeys - 21 productos", totebag: "Bolsos de Mano / ToteBag - 2 productos", cuadros: "Cuadros Decorativos - 3 productos", llaveros: "Llaveros - 4 productos", mousepad: "Alfombrilla de Raton / Mouse Pad - 3 productos" };
+  const titulosSeccion = { hombre: "Hombre / Unisex", mujer: "Mujer - 24 productos", gorras: "Gorras / Jockeys - 21 productos", totebag: "Bolsos de Mano / ToteBag - 2 productos", cuadros: "Cuadros Decorativos - 3 productos", llaveros: "Llaveros - 4 productos", mousepad: "Alfombrilla de Raton / Mouse Pad - 3 productos" };
   let categoriasAMostrar = categoriaSeleccionada ? [categoriaSeleccionada] : Object.keys(baseDeDatosProductos);
   const hayBusqueda = busqueda.trim().length > 0;
+  const cumpleFiltroCatalogo = (prod) => (
+    (!lineaSeleccionada || prod.linea === lineaSeleccionada) &&
+    (presupuestoMaximo === null || parseInt(prod.precio.replace(/[^\d]/g, ''), 10) <= presupuestoMaximo)
+  );
 
   if (mostrarCheckout) {
     return (
-      <div style={{ backgroundColor: '#f3ece2', minHeight: '100vh', paddingBottom: '2rem' }}>
+      <div className={isChristmas ? 'site-shell christmas-site' : 'site-shell'} style={{ backgroundColor: '#f3ece2', minHeight: '100vh', paddingBottom: '2rem' }}>
+        {isChristmas && <div className="christmas-topbar">✨ ESPECIAL NAVIDAD • Envío GRATIS sobre $39.990 • Despachos a todo Chile antes del 24</div>}
         <div style={{ backgroundColor: '#111', color: '#fff', padding: '1rem 2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <div style={{ fontWeight: '900', fontStyle: 'italic' }}>PARADISE <span style={{ color: '#ff007f' }}>SHOP</span>.CL</div>
+          <div style={{ fontWeight: '900', fontStyle: 'italic' }}>PARADISE <span style={{ color: '#ff007f' }}>SHOP</span>.CL{isChristmas && <span className="christmas-logo-detail" aria-hidden="true">✦</span>}</div>
           <button onClick={() => setMostrarCheckout(false)} style={{ background: '#ff007f', color: '#fff', border: 'none', padding: '0.6rem 1.2rem', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>← Volver al catalogo</button>
         </div>
         <CheckoutParadise carrito={carrito} totalCarrito={carrito.reduce((acc, item) => acc + (item.precioNum || 0), 0)} onVolver={() => setMostrarCheckout(false)} />
@@ -219,15 +317,20 @@ function App() {
   }
 
   return (
-    <div style={{ backgroundColor: '#f3ece2', color: '#1a1a1a', minHeight: '100vh', paddingBottom: '4rem' }}>
-      
-/* --- RESPONSIVE MOBILE FIX --- */
+    <div className={isChristmas ? 'site-shell christmas-site' : 'site-shell'} style={{ backgroundColor: '#f3ece2', color: '#1a1a1a', minHeight: '100vh', paddingBottom: '4rem' }}>
 <style>{`
+  @media (max-width: 1350px) {
+    header { flex-direction: column !important; padding: 0.8rem 1rem !important; gap: 0.8rem !important; align-items: stretch !important; }
+    header > div:first-child { justify-content: space-between !important; }
+    header nav { gap: 0.8rem !important; font-size: 0.75rem !important; overflow-x: auto; white-space: nowrap; padding-bottom: 0.3rem; }
+    header > div:last-child { width: 100% !important; gap: 0.5rem !important; }
+    header > div:last-child > div:first-child { width: 100% !important; max-width: 100% !important; }
+  }
   @media (max-width: 900px) {
     header { flex-direction: column !important; padding: 0.8rem 1rem !important; gap: 0.8rem !important; align-items: stretch !important; }
     header > div:first-child { justify-content: space-between !important; }
     header nav { gap: 0.8rem !important; font-size: 0.75rem !important; overflow-x: auto; white-space: nowrap; padding-bottom: 0.3rem; }
-    header > div:last-child { width: 100% !important; }
+    header > div:last-child { width: 100% !important; gap: 0.5rem !important; }
     header > div:last-child > div:first-child { width: 100% !important; max-width: 100% !important; }
     .product-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 0.8rem !important; }
     main { padding: 1.5rem 1rem !important; }
@@ -248,12 +351,17 @@ function App() {
 `}</style>
 
       {mensajeExito && (<div style={{ backgroundColor: "#00c851", color: "#fff", padding: "1rem", textAlign: "center", fontWeight: "bold", position: "fixed", top: 0, left: 0, right: 0, zIndex: 2000 }}>{mensajeExito}</div>)}
-      <div style={{ backgroundColor: '#ff007f', color: '#fff', fontSize: '0.75rem', fontWeight: 'bold', textAlign: 'center', padding: '0.4rem 1rem', textTransform: 'uppercase' }}>⚡ Envios Blue Express • DTF HD ⚡</div>
-      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.1rem 2.5rem', borderBottom: '1px solid #e0d6c8', backgroundColor: '#f3ece2', position: 'sticky', top: 0, zIndex: 100, gap: '2rem' }}>
+      {isChristmas ? (
+        <div className="christmas-topbar">✨ ESPECIAL NAVIDAD • Envío GRATIS sobre $39.990 • Despachos a todo Chile antes del 24</div>
+      ) : (
+        <div style={{ backgroundColor: '#ff007f', color: '#fff', fontSize: '0.75rem', fontWeight: 'bold', textAlign: 'center', padding: '0.4rem 1rem', textTransform: 'uppercase' }}>⚡ Envios Blue Express • DTF HD ⚡</div>
+      )}
+      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.1rem 2.5rem', borderBottom: '1px solid #e0d6c8', backgroundColor: '#f3ece2', position: 'sticky', top: isChristmas ? 'var(--christmas-bar-height)' : 0, zIndex: 100, gap: '2rem' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '2.5rem', flex: 1 }}>
           <div style={{ cursor: 'pointer', display: 'flex', alignItems: 'baseline', gap: '0.4rem', lineHeight: 1 }} onClick={() => { setCategoriaSeleccionada(null); setBusqueda(''); window.scrollTo({top:0, behavior:'smooth'}); }}>
             <span style={{ fontSize: '2.2rem', fontWeight: '900', fontStyle: 'italic', fontFamily: 'Georgia, serif', letterSpacing: '-0.02em', color: '#111' }}>PARADISE</span>
             <span style={{ fontSize: '2.2rem', fontWeight: '900', color: '#ff007f', letterSpacing: '-0.02em' }}>SHOP.CL</span>
+            {isChristmas && <span className="christmas-logo-detail" aria-hidden="true">✦</span>}
           </div>
           <nav style={{ display: 'flex', gap: '1.8rem', fontSize: '0.9rem', fontWeight: '600', textTransform: 'uppercase', alignItems: 'center', letterSpacing: '0.5px' }}>
             <a href="#" onClick={(e)=>{e.preventDefault(); setCategoriaSeleccionada(null); setBusqueda(''); window.scrollTo({top:0, behavior:'smooth'});}} style={{ color: '#111', textDecoration: 'none', cursor: 'pointer', fontWeight: '700' }}>Inicio</a>
@@ -274,6 +382,41 @@ function App() {
           </button>
         </div>
       </header>
+
+      {isChristmas && (
+        <>
+          <section className="christmas-hero">
+            <div className="christmas-hero-content">
+              <span className="christmas-eyebrow">Colección de temporada</span>
+              <h1>Regala Actitud esta Navidad</h1>
+              <p>Diseños para regalar algo distinto, con el sello Paradise.</p>
+              <div className="christmas-hero-actions">
+                <button onClick={() => filtrarPorPresupuesto(19990)}>Regalos hasta $19.990</button>
+                <button onClick={() => filtrarPorLinea('clasica')}>Línea Clásica</button>
+                <button onClick={() => filtrarPorLinea('vip')}>Línea VIP</button>
+              </div>
+            </div>
+          </section>
+
+          <section className="christmas-gift-guide" aria-label="Guía de regalos">
+            <h2>Guía de Regalos</h2>
+            <div className="christmas-gift-guide-grid">
+              <button onClick={() => filtrarPorPresupuesto(14990)}>
+                <span>Accesorios &amp; Amigo Secreto</span>
+                <small>Detalles para regalar desde $6.990</small>
+              </button>
+              <button onClick={() => filtrarPorLinea('clasica')}>
+                <span>Línea Clásica ($19.990)</span>
+                <small>Oversize de algodón 280g</small>
+              </button>
+              <button onClick={() => filtrarPorLinea('vip')}>
+                <span>Edición VIP</span>
+                <small>Explora toda la colección</small>
+              </button>
+            </div>
+          </section>
+        </>
+      )}
 
       {mostrarCarritoModal && (
         <div className="carro-modal" style={{ position: 'fixed', top: 0, right: 0, width: '100%', maxWidth: '400px', height: '100%', backgroundColor: '#fff', boxShadow: '-5px 0 25px rgba(0,0,0,0.15)', zIndex: 1000, display: 'flex', flexDirection: 'column', padding: '2rem' }}>
@@ -354,24 +497,38 @@ function App() {
       </section>
 
       <main ref={catalogoRef} id="catalogo" style={{ maxWidth: '1200px', margin: '2rem auto 0 auto', padding: '3rem 2rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '0.6rem', flexWrap: 'wrap', marginBottom: '1.5rem' }}>
+          {[{ value: null, label: 'Todas las líneas' }, { value: 'clasica', label: 'Línea Clásica' }, { value: 'vip', label: 'Línea VIP' }].map(opcion => (
+            <button key={opcion.value || 'todas'} onClick={() => filtrarPorLinea(opcion.value)} style={{ backgroundColor: lineaSeleccionada === opcion.value && presupuestoMaximo === null ? '#111' : '#fff', color: lineaSeleccionada === opcion.value && presupuestoMaximo === null ? '#fff' : '#333', border: '1px solid #e0d6c8', borderRadius: '20px', padding: '0.45rem 0.9rem', cursor: 'pointer', fontWeight: '700', fontSize: '0.8rem' }}>{opcion.label}</button>
+          ))}
+          {presupuestoMaximo !== null && <span className="christmas-budget-label">Hasta ${presupuestoMaximo.toLocaleString('es-CL')}</span>}
+        </div>
         {hayBusqueda ? (
           (() => {
             let resultadosTotales = [];
             Object.keys(baseDeDatosProductos).forEach(cat => {
-              const filtrados = baseDeDatosProductos[cat].filter(prod => prod.titulo.toLowerCase().includes(busqueda.toLowerCase()));
+              const filtrados = baseDeDatosProductos[cat].filter(prod => prod.titulo.toLowerCase().includes(busqueda.toLowerCase()) && cumpleFiltroCatalogo(prod));
               resultadosTotales = [...resultadosTotales, ...filtrados];
             });
             if (resultadosTotales.length === 0) return (<div style={{ textAlign: 'center', padding: '4rem 0' }}>No hay resultados para "{busqueda}"</div>);
-            return (<div className="product-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.2rem' }}>{resultadosTotales.map((prod, index) => (<ProductCard key={index} img={prod.imagen} title={prod.nombreComercial || prod.titulo} price={prod.precio} onComprar={() => agregarAlCarrito(prod)} onAbrirDetalle={() => { setProductoDetalle(prod); setTallaSeleccionada(prod.tallas ? prod.tallas[0] : ''); }} />))}</div>);
+            return (<div className="product-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.2rem' }}>{resultadosTotales.map((prod, index) => (<ProductCard key={index} img={prod.imagen} title={prod.nombreComercial || prod.titulo} price={prod.precio} linea={prod.linea} destacadoNavidad={prod.destacadoNavidad} onComprar={() => agregarAlCarrito(prod)} onAbrirDetalle={() => { setProductoDetalle(prod); setTallaSeleccionada(prod.tallas ? prod.tallas[0] : ''); }} />))}</div>);
           })()
         ) : (
           categoriasAMostrar.map((catKey) => (
             <div key={catKey} style={{ marginBottom: '4rem' }}>
+              {(() => {
+                const productosVisibles = baseDeDatosProductos[catKey].filter(cumpleFiltroCatalogo);
+                if (productosVisibles.length === 0) return null;
+                return (
+                  <>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', borderBottom: '1px solid #d5cbc0', paddingBottom: '0.5rem' }}>
                 <h3 style={{ fontSize: '1.3rem', fontWeight: '800', margin: 0, textTransform: 'uppercase' }}>{titulosSeccion[catKey]}</h3>
-                <span style={{ fontSize: '0.85rem', color: '#ff007f', fontWeight: 'bold' }}>{baseDeDatosProductos[catKey].length} productos</span>
+                <span style={{ fontSize: '0.85rem', color: '#ff007f', fontWeight: 'bold' }}>{productosVisibles.length} productos</span>
               </div>
-              <div className="product-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.2rem' }}>{baseDeDatosProductos[catKey].map((prod, index) => (<ProductCard key={index} img={prod.imagen} title={prod.nombreComercial || prod.titulo} price={prod.precio} onComprar={() => agregarAlCarrito(prod)} onAbrirDetalle={() => { setProductoDetalle(prod); setTallaSeleccionada(prod.tallas ? prod.tallas[0] : ''); }} />))}</div>
+              <div className="product-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.2rem' }}>{productosVisibles.map((prod, index) => (<ProductCard key={index} img={prod.imagen} title={prod.nombreComercial || prod.titulo} price={prod.precio} linea={prod.linea} destacadoNavidad={prod.destacadoNavidad} onComprar={() => agregarAlCarrito(prod)} onAbrirDetalle={() => { setProductoDetalle(prod); setTallaSeleccionada(prod.tallas ? prod.tallas[0] : ''); }} />))}</div>
+                  </>
+                );
+              })()}
             </div>
           ))
         )}
@@ -400,6 +557,7 @@ function App() {
               <div style={{ borderTop: '1px solid #e0d6c8', borderBottom: '1px solid #e0d6c8', padding: '1rem', marginBottom: '1.2rem', backgroundColor: '#faf7f2', borderRadius: '6px' }}>
                 <h4 style={{ fontSize: '0.9rem', fontWeight: '800', textTransform: 'uppercase', margin: '0 0 0.6rem 0' }}>Ficha Tecnica:</h4>
                 <ul style={{ paddingLeft: '1.2rem', margin: 0, fontSize: '0.85rem', color: '#444', lineHeight: '1.9' }}>
+                  {productoDetalle.descripcion && <li><strong>Descripción:</strong> {productoDetalle.descripcion}</li>}
                   <li><strong>Material:</strong> {productoDetalle.material}</li>
                   <li><strong>Tejido:</strong> {productoDetalle.tejido}</li>
                   <li><strong>Estampado:</strong> {productoDetalle.estampado}</li>
@@ -467,6 +625,7 @@ function App() {
             <strong style={{ color: '#fff' }}>Demoras Blue Express:</strong> Los tiempos de entrega son responsabilidad de Blue Express. Paradise Shop despacha en 24-72hrs hábiles desde el pago confirmado.
           </p>
         </div>
+        {isChristmas && <p className="christmas-footer-note">🎄 Cambios por talla extendidos por Navidad hasta el 15 de enero</p>}
       </footer>
 
     </div>

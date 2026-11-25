@@ -386,6 +386,11 @@ function App() {
       {isChristmas && (
         <>
           <section className="christmas-hero">
+            <svg className="christmas-hero-ornament christmas-hero-tree" viewBox="0 0 120 160" aria-hidden="true" focusable="false">
+              <path d="M60 12 56 21 46 22l7 7-2 10 9-5 9 5-2-10 7-7-10-1z" />
+              <path d="m60 42-23 25h13L29 90h18l-27 28h80L73 90h18L70 67h13L60 42Z" />
+              <path d="M60 118v23m-11 0h22" />
+            </svg>
             <div className="christmas-hero-content">
               <span className="christmas-eyebrow">Colección de temporada</span>
               <h1>Regala Actitud esta Navidad</h1>
@@ -396,6 +401,13 @@ function App() {
                 <button onClick={() => filtrarPorLinea('vip')}>Línea VIP</button>
               </div>
             </div>
+            <svg className="christmas-hero-ornament christmas-hero-bells" viewBox="0 0 140 120" aria-hidden="true" focusable="false">
+              <path d="M20 78c8-8 9-18 9-31 0-14 8-24 19-26 12 2 20 12 20 26 0 13 1 23 9 31H20Z" />
+              <path d="M36 21c0-7 5-12 12-12s12 5 12 12M18 78h61m-34 0v7a6 6 0 0 0 12 0v-7" />
+              <path d="M62 78c8-8 9-18 9-31 0-14 8-24 19-26 12 2 20 12 20 26 0 13 1 23 9 31H62Z" />
+              <path d="M78 21c0-7 5-12 12-12s12 5 12 12m-32 57h61m-34 0v7a6 6 0 0 0 12 0v-7" />
+              <path d="M69 15c-8-8-18-8-19-2-1 5 8 9 19 10 11-1 20-5 19-10-1-6-11-6-19 2Zm0 8v12" />
+            </svg>
           </section>
 
           <section className="christmas-gift-guide" aria-label="Guía de regalos">

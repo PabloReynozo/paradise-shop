@@ -288,12 +288,16 @@ body {
   align-items: center;
   justify-content: center;
   padding: 0 1rem;
-  background: #111;
-  color: #D4AF37;
+  background: #6e0910;
+  color: #fff;
   font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.06em;
   text-align: center;
+}
+
+.christmas-topbar-accent {
+  color: #F3D27A;
 }
 
 .christmas-logo-detail {
@@ -313,7 +317,7 @@ body {
   padding: 2.4rem 2rem;
   border: 1px solid rgba(212, 175, 55, 0.35);
   border-radius: 12px;
-  background: linear-gradient(120deg, #111 0%, #1b1915 100%);
+  background: radial-gradient(circle at center, #9e111b 0%, #5c070d 65%, #380307 100%);
   color: #f3ece2;
   text-align: center;
 }
@@ -326,30 +330,71 @@ body {
   padding: 0 5.5rem;
 }
 
-.christmas-hero-ornament {
+.christmas-hero-garland {
   position: absolute;
-  top: 50%;
+  top: 0.1rem;
+  left: 2%;
   z-index: 0;
-  height: 132px;
-  fill: none;
-  opacity: 0.42;
+  width: 96%;
+  height: 40px;
+  overflow: visible;
   pointer-events: none;
-  stroke: #D4AF37;
+}
+
+.christmas-garland-wire {
+  fill: none;
+  stroke: #F3D27A;
+  stroke-width: 1.35;
+  opacity: 0.75;
+}
+
+.christmas-garland-light {
+  fill: #F3D27A;
+  filter: drop-shadow(0 0 3px #F3D27A);
+}
+
+.christmas-hero-corner {
+  position: absolute;
+  top: 0;
+  z-index: 0;
+  width: 150px;
+  height: 165px;
+  fill: none;
+  opacity: 0.92;
+  pointer-events: none;
   stroke-linecap: round;
   stroke-linejoin: round;
-  stroke-width: 1.5;
-  transform: translateY(-50%);
+  stroke-width: 1.7;
 }
 
-.christmas-hero-tree {
-  left: 1.25rem;
-  width: 90px;
+.christmas-hero-corner-left {
+  left: 0;
 }
 
-.christmas-hero-bells {
-  right: 1.25rem;
-  width: 118px;
-  height: 110px;
+.christmas-hero-corner-right {
+  right: 0;
+}
+
+.christmas-pine-branch {
+  stroke: #24432E;
+  stroke-width: 2;
+}
+
+.christmas-bauble-string {
+  stroke: #F3D27A;
+  stroke-width: 1.2;
+}
+
+.christmas-bauble-gold {
+  fill: #D4AF37;
+  stroke: #F3D27A;
+  stroke-width: 1.2;
+}
+
+.christmas-bauble-burgundy {
+  fill: #6e0910;
+  stroke: #F3D27A;
+  stroke-width: 1.2;
 }
 
 .christmas-eyebrow {
@@ -435,7 +480,8 @@ body {
   justify-content: center;
   gap: 0.25rem;
   padding: 0.8rem;
-  background: #111;
+  border-color: rgba(212, 175, 55, 0.42);
+  background: #2b0508;
   text-align: left;
 }
 
@@ -548,7 +594,7 @@ body {
     padding: 0;
   }
 
-  .christmas-hero-ornament {
+  .christmas-hero-corner {
     display: none;
   }
 }

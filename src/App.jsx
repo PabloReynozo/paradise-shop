@@ -306,7 +306,7 @@ function App() {
   if (mostrarCheckout) {
     return (
       <div className={isChristmas ? 'site-shell christmas-site' : 'site-shell'} style={{ backgroundColor: '#f3ece2', minHeight: '100vh', paddingBottom: '2rem' }}>
-        {isChristmas && <div className="christmas-topbar">✨ ESPECIAL NAVIDAD • Envío GRATIS sobre $39.990 • Despachos a todo Chile antes del 24</div>}
+        {isChristmas && <div className="christmas-topbar"><span className="christmas-topbar-accent">✨</span> ESPECIAL NAVIDAD <span className="christmas-topbar-accent">•</span> Envío GRATIS sobre $39.990 <span className="christmas-topbar-accent">•</span> Despachos a todo Chile antes del 24</div>}
         <div style={{ backgroundColor: '#111', color: '#fff', padding: '1rem 2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div style={{ fontWeight: '900', fontStyle: 'italic' }}>PARADISE <span style={{ color: '#ff007f' }}>SHOP</span>.CL{isChristmas && <span className="christmas-logo-detail" aria-hidden="true">✦</span>}</div>
           <button onClick={() => setMostrarCheckout(false)} style={{ background: '#ff007f', color: '#fff', border: 'none', padding: '0.6rem 1.2rem', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>← Volver al catalogo</button>
@@ -352,7 +352,7 @@ function App() {
 
       {mensajeExito && (<div style={{ backgroundColor: "#00c851", color: "#fff", padding: "1rem", textAlign: "center", fontWeight: "bold", position: "fixed", top: 0, left: 0, right: 0, zIndex: 2000 }}>{mensajeExito}</div>)}
       {isChristmas ? (
-        <div className="christmas-topbar">✨ ESPECIAL NAVIDAD • Envío GRATIS sobre $39.990 • Despachos a todo Chile antes del 24</div>
+        <div className="christmas-topbar"><span className="christmas-topbar-accent">✨</span> ESPECIAL NAVIDAD <span className="christmas-topbar-accent">•</span> Envío GRATIS sobre $39.990 <span className="christmas-topbar-accent">•</span> Despachos a todo Chile antes del 24</div>
       ) : (
         <div style={{ backgroundColor: '#ff007f', color: '#fff', fontSize: '0.75rem', fontWeight: 'bold', textAlign: 'center', padding: '0.4rem 1rem', textTransform: 'uppercase' }}>⚡ Envios Blue Express • DTF HD ⚡</div>
       )}
@@ -386,10 +386,25 @@ function App() {
       {isChristmas && (
         <>
           <section className="christmas-hero">
-            <svg className="christmas-hero-ornament christmas-hero-tree" viewBox="0 0 120 160" aria-hidden="true" focusable="false">
-              <path d="M60 12 56 21 46 22l7 7-2 10 9-5 9 5-2-10 7-7-10-1z" />
-              <path d="m60 42-23 25h13L29 90h18l-27 28h80L73 90h18L70 67h13L60 42Z" />
-              <path d="M60 118v23m-11 0h22" />
+            <svg className="christmas-hero-garland" viewBox="0 0 1000 40" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+              <path className="christmas-garland-wire" d="M0 5C145 15 190 35 320 24S455 13 500 20s85 17 180 8S850 8 1000 5" />
+              <circle className="christmas-garland-light" cx="70" cy="12" r="2.6" />
+              <circle className="christmas-garland-light" cx="175" cy="22" r="2.6" />
+              <circle className="christmas-garland-light" cx="285" cy="27" r="2.6" />
+              <circle className="christmas-garland-light" cx="395" cy="20" r="2.6" />
+              <circle className="christmas-garland-light" cx="505" cy="20" r="2.8" />
+              <circle className="christmas-garland-light" cx="615" cy="25" r="2.6" />
+              <circle className="christmas-garland-light" cx="725" cy="22" r="2.6" />
+              <circle className="christmas-garland-light" cx="835" cy="12" r="2.6" />
+              <circle className="christmas-garland-light" cx="935" cy="8" r="2.6" />
+            </svg>
+            <svg className="christmas-hero-corner christmas-hero-corner-left" viewBox="0 0 180 190" aria-hidden="true" focusable="false">
+              <path className="christmas-pine-branch" d="M5 0C31 23 62 52 111 88" />
+              <path className="christmas-pine-branch" d="m25 19-12-14m12 14L28 3m-3 16 17 4M45 37 31 21m14 16 3-18m-3 18 19 8M66 56 52 40m14 16 3-20m-3 20 20 12M88 73 75 58m13 15 9-19m-9 19 20 17" />
+              <path className="christmas-bauble-string" d="m36 28-5 38m42-2-5 42m30-25 16 39" />
+              <circle className="christmas-bauble christmas-bauble-gold" cx="31" cy="73" r="8" />
+              <circle className="christmas-bauble christmas-bauble-burgundy" cx="68" cy="112" r="9" />
+              <circle className="christmas-bauble christmas-bauble-gold" cx="120" cy="126" r="7" />
             </svg>
             <div className="christmas-hero-content">
               <span className="christmas-eyebrow">Colección de temporada</span>
@@ -401,12 +416,15 @@ function App() {
                 <button onClick={() => filtrarPorLinea('vip')}>Línea VIP</button>
               </div>
             </div>
-            <svg className="christmas-hero-ornament christmas-hero-bells" viewBox="0 0 140 120" aria-hidden="true" focusable="false">
-              <path d="M20 78c8-8 9-18 9-31 0-14 8-24 19-26 12 2 20 12 20 26 0 13 1 23 9 31H20Z" />
-              <path d="M36 21c0-7 5-12 12-12s12 5 12 12M18 78h61m-34 0v7a6 6 0 0 0 12 0v-7" />
-              <path d="M62 78c8-8 9-18 9-31 0-14 8-24 19-26 12 2 20 12 20 26 0 13 1 23 9 31H62Z" />
-              <path d="M78 21c0-7 5-12 12-12s12 5 12 12m-32 57h61m-34 0v7a6 6 0 0 0 12 0v-7" />
-              <path d="M69 15c-8-8-18-8-19-2-1 5 8 9 19 10 11-1 20-5 19-10-1-6-11-6-19 2Zm0 8v12" />
+            <svg className="christmas-hero-corner christmas-hero-corner-right" viewBox="0 0 180 190" aria-hidden="true" focusable="false">
+              <g transform="translate(180 0) scale(-1 1)">
+                <path className="christmas-pine-branch" d="M5 0C31 23 62 52 111 88" />
+                <path className="christmas-pine-branch" d="m25 19-12-14m12 14L28 3m-3 16 17 4M45 37 31 21m14 16 3-18m-3 18 19 8M66 56 52 40m14 16 3-20m-3 20 20 12M88 73 75 58m13 15 9-19m-9 19 20 17" />
+                <path className="christmas-bauble-string" d="m36 28-5 38m42-2-5 42m30-25 16 39" />
+                <circle className="christmas-bauble christmas-bauble-gold" cx="31" cy="73" r="8" />
+                <circle className="christmas-bauble christmas-bauble-burgundy" cx="68" cy="112" r="9" />
+                <circle className="christmas-bauble christmas-bauble-gold" cx="120" cy="126" r="7" />
+              </g>
             </svg>
           </section>
 
